@@ -1,0 +1,23 @@
+{
+  "semi": true,
+  "singleQuote": false,
+  "tabWidth": 2,
+  "printWidth": 100,
+  "trailingComma": "es5",
+  "arrowParens": "always",
+  "tailwindConfig": "./tailwind.config.ts",
+  "importOrder": [
+    "^react$",
+    "^next(.*)$",
+    "<THIRD_PARTY_MODULES>",
+    "",
+    "^@/components/(.*)$",
+    "^@/app/(.*)$",
+    "^@/lib/(.*)$",
+    "^@/hooks/(.*)$",
+    "",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}
