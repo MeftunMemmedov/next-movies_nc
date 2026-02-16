@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 
 faker.seed(12);
 
-const createRandomGenre = (): Genre => {
+export const createRandomGenre = (): Genre => {
   const title = faker.book.genre();
   return {
     title,

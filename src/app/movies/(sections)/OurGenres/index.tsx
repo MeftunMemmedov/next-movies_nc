@@ -1,17 +1,14 @@
 "use client";
-import Slider from "@/components/Slider";
 import { GENRES } from "@/data/genre";
-import { createFakeImage } from "@/helpers/common";
-import Image from "next/image";
-import { MdOutlineArrowForward } from "react-icons/md";
 import { SwiperSlide } from "swiper/react";
+import Image from "next/image";
+import { createFakeImage } from "@/helpers/common";
+import { MdOutlineArrowForward } from "react-icons/md";
+import Slider from "@/components/Slider";
 
-const CategorySlider = () => {
+const OurGenres = () => {
   return (
-    <Slider
-      title="Explore our wide variety of categories"
-      description=" Whether you're looking for a comedy to make you laugh, a drama to make you think, or a documentary to learn something new"
-    >
+    <Slider title="Our Genres">
       {GENRES.map((genre, index) => (
         <SwiperSlide key={`home-genre-slide-${index}-${genre.slug}`}>
           <div className="rounded-md p-6 bg-secondary-black aspect-239/282">
@@ -35,4 +32,4 @@ const CategorySlider = () => {
   );
 };
 
-export default CategorySlider;
+export default OurGenres;

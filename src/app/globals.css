@@ -8,7 +8,7 @@
   --color-main-red: #e50000;
   --color-secondary-black: #1a1a1a;
   --color-main-red: #e50000;
-  --container-custom:  
+  --container-custom:   
 ;
 }
 
@@ -18,4 +18,22 @@
 
 button {
   cursor: pointer;
+}
+
+.swiper-pagination-bullet {
+  background-color: #1a1a1a;
+  width: 16px;
+  height: 4px;
+  opacity: 1;
+  margin: 0 6px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border-radius: 10px;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #e50000;
+  width: 23px;
+  height: 4px;
+  transform: scale(1.2);
 }
