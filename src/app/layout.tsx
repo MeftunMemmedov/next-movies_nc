@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Layout from "@/components/Layout";
+import { NuqsAdapter } from "nuqs/adapters/next";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-main-black">
-        <Layout>{children}</Layout>
+        <NuqsAdapter>
+          <Layout>{children}</Layout>
+        </NuqsAdapter>
       </body>
     </html>
   );

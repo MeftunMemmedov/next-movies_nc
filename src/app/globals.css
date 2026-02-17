@@ -8,7 +8,7 @@
   --color-main-red: #e50000;
   --color-secondary-black: #1a1a1a;
   --color-main-red: #e50000;
-  --container-custom:   
+  --container-custom:     
 ;
 }
 
@@ -36,4 +36,16 @@ button {
   width: 23px;
   height: 4px;
   transform: scale(1.2);
+}
+
+.custom-select-option-list::-webkit-scrollbar {
+  padding-top: 30px;
+  background-color: transparent;
+  border: 1px solid black;
+  width: 2px;
+}
+.custom-select-option-list::-webkit-scrollbar-thumb {
+  background-color: #e50000;
+  width: 5px;
+  border-radius: 10px;
 }
