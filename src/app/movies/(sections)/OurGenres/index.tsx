@@ -1,15 +1,20 @@
 "use client";
-import { GENRES } from "@/data/genre";
 import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { createFakeImage } from "@/helpers/common";
 import { MdOutlineArrowForward } from "react-icons/md";
 import Slider from "@/components/Slider";
+import { useAppSelector } from "@/store/hooks";
+import Link from "next/link";
 
 const OurGenres = () => {
+  const { genres } = useAppSelector((store) => store.data);
+
+  if (!genres) return null;
+
   return (
     <Slider title="Our Genres">
-      {GENRES.map((genre, index) => (
+      {genres.map((genre, index) => (
         <SwiperSlide key={`home-genre-slide-${index}-${genre.slug}`}>
           <div className="rounded-md p-6 bg-secondary-black aspect-239/282">
             <div className="aspect-190/210 rounded-md overflow-hidden">
@@ -21,10 +26,13 @@ const OurGenres = () => {
                 alt={genre.title}
               />
             </div>
-            <div className="text-white flex items-center justify-between">
+            <Link
+              href={`/${genre.slug}`}
+              className="text-white inline-flex w-full items-center justify-between cursor-pointer hover:text-main-red transition-colors"
+            >
               <h3>{genre.title}</h3>
               <MdOutlineArrowForward size={30} />
-            </div>
+            </Link>
           </div>
         </SwiperSlide>
       ))}

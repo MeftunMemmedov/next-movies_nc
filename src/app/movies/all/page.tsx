@@ -13,21 +13,21 @@ interface Props {
 }
 
 const AllMovies = async ({ searchParams }: Props) => {
-  const { genre, agerating, year } = await searchParams;
+  const { genre, agerating, year, imdb } = await searchParams;
 
   const params: Record<string, string | number | undefined> = {};
 
   if (genre) params.genres = `cs.{${genre}}`;
   if (year) params.year = `eq.${year}`;
   if (agerating) params.age_rating = `eq.${agerating}`;
+  if (imdb) params.rating = `gte.${imdb}`;
 
   const movies = await getDataList<Movie>("mov_movies", params);
 
-  // console.log();
   return (
     <main className="container pt-32">
       <section className=" mb-20">
-        <Filter />
+        <Filter params={params} />
       </section>
       <section>
         <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">

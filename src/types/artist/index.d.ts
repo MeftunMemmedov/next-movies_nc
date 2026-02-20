@@ -6,6 +6,7 @@ export type Artist = {
   bio?: string;
   directed?: Movie[];
   starred_in?: Movie[];
+  image: string;
 };
 
 export type Cast = {

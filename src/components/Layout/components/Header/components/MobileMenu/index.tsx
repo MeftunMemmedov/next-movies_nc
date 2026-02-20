@@ -6,7 +6,6 @@ import Logo from "../../../Logo";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { GENRES } from "@/data/genre";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getGenreList } from "@/store/data/actions";
@@ -39,6 +38,8 @@ const MobileMenu = () => {
       dispatch(getGenreList());
     }
   }, [genres]);
+
+  if (!genres) return null;
   return (
     <>
       <button
@@ -85,7 +86,7 @@ const MobileMenu = () => {
                 <ul
                   className={`flex flex-col gap-2 ${isGenremenuActive ? "max-h-100" : "max-h-0"} transition-all duration-100 overflow-hidden`}
                 >
-                  {GENRES.map((genre, index) => (
+                  {genres.map((genre, index) => (
                     <li
                       className="font-semibold"
                       key={`header-mobilemenu-genre-${genre.slug}-${index}`}

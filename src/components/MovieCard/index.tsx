@@ -4,8 +4,11 @@ import Link from "next/link";
 
 const MovieCard = ({ movie }: { movie: Movie }) => {
   return (
-    <Link href={`/`} className="inline-block rounded-md p-6 bg-secondary-black aspect-239/282">
-      <div className="aspect-224/308 rounded-md overflow-hidden relative">
+    <Link
+      href={`/movies/${movie.slug}`}
+      className="inline-block rounded-md p-6 bg-secondary-black aspect-239/282"
+    >
+      <div className="aspect-2/3 rounded-md overflow-hidden relative">
         <div className="absolute size-full group overflow-hidden bg-transparent hover:bg-black/40 transition-colors">
           <div className="relative size-full">
             <div className="text-center absolute w-full -bottom-40 group-hover:bottom-0 transition-all text-white">

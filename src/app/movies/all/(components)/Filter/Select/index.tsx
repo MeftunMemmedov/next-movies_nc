@@ -28,7 +28,7 @@ const Select = ({ queryName, defaultOptionText, options }: Props) => {
   return (
     <div className="text-white inline-block md:min-w-56 min-w-full relative">
       <button
-        className={`w-full flex items-center md:gap-8 gap-4 justify-between md:pl-10 pl-5 pr-2 py-2 rounded-t-lg bg-red-900 relative z-30 transition-all ${isSelectActive ? "rounded-b-none" : "rounded-b-lg"}`}
+        className={`w-full flex items-center md:gap-8 gap-4 justify-between md:pl-10 pl-5 pr-3 py-2 rounded-t-lg bg-red-950 relative z-30 transition-all ${isSelectActive ? "rounded-b-none" : "rounded-b-lg"}`}
         onClick={() => setIsSelectActive((prevState) => !prevState)}
       >
         <span className={`${defaultOptionText.length > 17 ? "text-sm" : "text-base"}`}>
@@ -39,7 +39,7 @@ const Select = ({ queryName, defaultOptionText, options }: Props) => {
         />
       </button>
       <ul
-        className={`custom-select-option-list bg-red-950 scroll- z-20 w-full md:absolute md:top-6 md:left-0 rounded-b-lg overflow-auto transition-all ${isSelectActive ? "max-h-56 pb-4 pt-5" : "max-h-0"}`}
+        className={`custom-select-option-list bg-main-black scroll- z-20 w-full md:absolute md:top-6 md:left-0 rounded-b-lg overflow-auto transition-all ${isSelectActive ? "max-h-56 pb-4 pt-5" : "max-h-0"}`}
       >
         {urlSearchParams.get(queryName) !== null ? (
           <li
@@ -56,7 +56,7 @@ const Select = ({ queryName, defaultOptionText, options }: Props) => {
         {options.map((option, index) => (
           <li
             key={`select-${defaultOptionText}-${option.value}-${index}`}
-            className="hover:bg-main-red px-4 py-2 cursor-pointer"
+            className="hover:bg-red-950 px-4 py-2 cursor-pointer"
             onClick={() => handleSelect(option.value)}
           >
             <span>{option.label}</span>

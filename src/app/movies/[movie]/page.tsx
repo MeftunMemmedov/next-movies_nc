@@ -1,17 +1,23 @@
-import { MOVIES } from "@/data/movie";
 import { Banner } from "./(sections)";
-import CastSlider from "./(components)/CastSlider";
 import { CiCalendar } from "react-icons/ci";
 import { TbCategory } from "react-icons/tb";
-import Image from "next/image";
-import { createFakeImage } from "@/helpers/common";
+import { getData, getDataList } from "@/api/helpers";
+import { Cast, Movie } from "@/types";
+import CastSlider from "./(components)/CastSlider";
+import { LiaImdb } from "react-icons/lia";
 
 const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) => {
   const { movie } = await params;
-  const currentMovie = MOVIES[0];
+  const currentMovie = await getData<Movie>("mov_movies", {
+    slug: `eq.${movie}`,
+  });
+
+  const cast = await getDataList<Cast>("mov_cast", {
+    movie_id: `eq.${currentMovie.id}`,
+    select: "*,actor:artist_id(*)",
+  });
   return (
     <main className="container">
-      {movie}
       <Banner movie={currentMovie} />
       <section>
         <div className="flex lg:flex-row flex-col gap-5 mt-36.5">
@@ -21,7 +27,7 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
               <p className="text-white">{currentMovie.description}</p>
             </div>
             <div>
-              <CastSlider cast={currentMovie.cast} />
+              <CastSlider cast={cast} />
             </div>
           </div>
           <div className="lg:w-[35%] w-full">
@@ -41,15 +47,34 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
                 </div>
                 {currentMovie.genres.map((genre, index) => (
                   <strong
-                    key={`genre-of-${currentMovie.title}-${genre.title}-${index}`}
+                    key={`genre-of-${currentMovie.title}-${genre}-${index}`}
                     className="text-white font-normal px-3 py-2 text-sm bg-main-black mr-3 mb-3 rounded-md"
                   >
-                    {genre.title}
+                    {genre}
                   </strong>
                 ))}
               </div>
 
               <div className="mb-5">
+                <div className="text-gray-400 flex items-center gap-2 mb-3">
+                  <TbCategory />
+                  <h3>Age rating</h3>
+                </div>
+                <strong className="text-white font-normal px-3 py-2 text-sm bg-main-black mr-3 mb-3 rounded-md">
+                  {currentMovie.age_rating}
+                </strong>
+              </div>
+              <div className="mb-5">
+                <div className="text-gray-400 flex items-center gap-2 mb-3">
+                  <LiaImdb />
+                  <h3>Rating</h3>
+                </div>
+                <strong className="text-white font-normal px-3 py-2 text-sm bg-main-black mr-3 mb-3 rounded-md">
+                  {currentMovie.rating}
+                </strong>
+              </div>
+
+              {/* <div className="mb-5">
                 <div className="text-gray-400 flex items-center gap-2 mb-3">
                   <h3>Directors</h3>
                 </div>
@@ -66,7 +91,7 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
                     </div>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

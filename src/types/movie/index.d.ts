@@ -5,7 +5,7 @@ export type Movie = {
   id: string;
   slug: string;
   title: string;
-  genres: Genre[];
+  genres: string[];
   year: string;
   rating: number;
   description: string;
