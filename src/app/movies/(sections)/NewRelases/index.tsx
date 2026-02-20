@@ -1,13 +1,17 @@
 "use client";
 import MovieCard from "@/components/MovieCard";
 import Slider from "@/components/Slider";
-import { MOVIES } from "@/data/movie";
+import { Movie } from "@/types";
 import { SwiperSlide } from "swiper/react";
 
-const NewRelases = () => {
+interface Props {
+  movies: Movie[];
+}
+
+const NewRelases = ({ movies }: Props) => {
   return (
     <Slider title="New Relases">
-      {MOVIES.map((movie, index) => (
+      {movies.map((movie, index) => (
         <SwiperSlide key={`home-genre-slide-${index}-${movie.id}`}>
           <MovieCard movie={movie} />
         </SwiperSlide>

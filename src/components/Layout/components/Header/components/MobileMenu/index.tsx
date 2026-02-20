@@ -8,8 +8,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GENRES } from "@/data/genre";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { getGenreList } from "@/store/data/actions";
 
 const MobileMenu = () => {
+  const dispatch = useAppDispatch();
+  const { genres } = useAppSelector((store) => store.data);
   const pathname = usePathname();
 
   const [isMobilemenuActive, setIsMobilemenuActive] = useState<boolean>(false);
@@ -29,6 +33,12 @@ const MobileMenu = () => {
       }
     }
   }, [isMobilemenuActive]);
+
+  useEffect(() => {
+    if (genres == null) {
+      dispatch(getGenreList());
+    }
+  }, [genres]);
   return (
     <>
       <button

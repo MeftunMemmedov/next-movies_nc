@@ -1,64 +1,45 @@
-import Select from "@/components/Filter/Select";
+import { getDataList } from "@/api/helpers";
 import MovieCard from "@/components/MovieCard";
-import { GENRES } from "@/data/genre";
-import { MOVIES } from "@/data/movie";
-import Link from "next/link";
+import { Movie } from "@/types";
+import Filter from "./(components)/Filter";
 
-const AllMovies = () => {
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => `${1900 + i}`);
+interface Props {
+  searchParams: Promise<{
+    genre?: string;
+    agerating?: string;
+    year?: string;
+    imdb?: string;
+  }>;
+}
 
+const AllMovies = async ({ searchParams }: Props) => {
+  const { genre, agerating, year } = await searchParams;
+
+  const params: Record<string, string | number | undefined> = {};
+
+  if (genre) params.genres = `cs.{${genre}}`;
+  if (year) params.year = `eq.${year}`;
+  if (agerating) params.age_rating = `eq.${agerating}`;
+
+  const movies = await getDataList<Movie>("mov_movies", params);
+
+  // console.log();
   return (
-    <main className="container">
-      <section className="pt-32 mb-20">
-        <div className="grid 2xl:grid-cols-5 md:grid-cols-2 grid-cols-1 2xl:gap-0 md:gap-3 gap-5 p-10 bg-secondary-black">
-          <div className="flex justify-center">
-            <Select
-              queryName="genre"
-              defaultOptionText="Select Genre"
-              options={GENRES.map((genre) => ({ label: genre.title, value: genre.slug }))}
-            />
-          </div>
-
-          <div className="flex justify-center">
-            <Select
-              queryName="agerating"
-              defaultOptionText="Select Age Rating"
-              options={GENRES.map((genre) => ({ label: genre.title, value: genre.slug }))}
-            />
-          </div>
-
-          <div className="flex justify-center">
-            <Select
-              queryName="year"
-              defaultOptionText="Select Year"
-              options={years.map((year) => ({ label: year, value: year }))}
-            />
-          </div>
-
-          <div className="flex justify-center">
-            <Select
-              queryName="imdb"
-              defaultOptionText="Select IMDB Rating"
-              options={Array.from({ length: 9 }).map((_, i) => ({
-                label: `${i + 1}+`,
-                value: `${i + 1}`,
-              }))}
-            />
-          </div>
-          <div className="flex items-center justify-center 2xl:col-span-1 md:col-span-2">
-            <Link href="/movies/all" className="px-8 py-1 text-white bg-main-red rounded-md">
-              Reset
-            </Link>
-          </div>
-        </div>
+    <main className="container pt-32">
+      <section className=" mb-20">
+        <Filter />
       </section>
       <section>
         <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-          {MOVIES.map((mov, index) => (
+          {movies.map((mov, index) => (
             <MovieCard movie={mov} key={`all-movies-${mov.title}-${index}`} />
           ))}
         </div>
+        {movies.length === 0 ? (
+          <div className="py-20 w-full">
+            <p className="text-white text-center text-3xl font-semibold">No Movie Found</p>
+          </div>
+        ) : null}
       </section>
     </main>
   );

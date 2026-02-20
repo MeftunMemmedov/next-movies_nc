@@ -8,6 +8,8 @@ faker.seed(123);
 export const createRandomMovie = (depth = 0): Movie => {
   return {
     id: "",
+    slug: "",
+    is_featured: false,
     title: faker.book.title(),
     genres: depth < 1 ? Array.from({ length: 3 }, () => createRandomGenre()) : [],
     year: "2020",

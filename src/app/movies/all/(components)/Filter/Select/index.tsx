@@ -1,6 +1,5 @@
 "use client";
-
-import { useQueryState } from "nuqs";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -13,15 +12,18 @@ interface Props {
 }
 
 const Select = ({ queryName, defaultOptionText, options }: Props) => {
-  const [query, setQuery] = useQueryState(queryName);
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [isSelectActive, setIsSelectActive] = useState<boolean>(false);
 
-  const getSelectedOption = () => {
-    if (!query) return undefined;
-    return options.find((option) => option.value === query)?.label;
-  };
+  const selectedOption = searchParams.get(queryName);
+  const urlSearchParams = new URLSearchParams(searchParams.toString());
 
-  const selectedOption = getSelectedOption();
+  const handleSelect = (val: string) => {
+    urlSearchParams.set(queryName, val);
+    router.push(`?${urlSearchParams.toString()}`);
+    setIsSelectActive(false);
+  };
 
   return (
     <div className="text-white inline-block md:min-w-56 min-w-full relative">
@@ -39,15 +41,23 @@ const Select = ({ queryName, defaultOptionText, options }: Props) => {
       <ul
         className={`custom-select-option-list bg-red-950 scroll- z-20 w-full md:absolute md:top-6 md:left-0 rounded-b-lg overflow-auto transition-all ${isSelectActive ? "max-h-56 pb-4 pt-5" : "max-h-0"}`}
       >
+        {urlSearchParams.get(queryName) !== null ? (
+          <li
+            className="hover:bg-main-red px-4 py-2 cursor-pointer"
+            onClick={() => {
+              urlSearchParams.delete(queryName);
+              router.push(`?${urlSearchParams.toString()}`);
+              setIsSelectActive(false);
+            }}
+          >
+            <span>{`--${defaultOptionText}--`}</span>
+          </li>
+        ) : null}
         {options.map((option, index) => (
           <li
             key={`select-${defaultOptionText}-${option.value}-${index}`}
-            className="hover:bg-main-red px-4 py-2"
-            onClick={() => {
-              // setSelectedOption(option.label);
-              setIsSelectActive(false);
-              setQuery(option.value);
-            }}
+            className="hover:bg-main-red px-4 py-2 cursor-pointer"
+            onClick={() => handleSelect(option.value)}
           >
             <span>{option.label}</span>
           </li>

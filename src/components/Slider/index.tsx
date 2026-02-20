@@ -15,6 +15,7 @@ const Slider = ({ children, title, description }: Props) => {
   const swiperRef = useRef<SwiperRef | null>(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [paginationCount, setPaginationCount] = useState<number>(0);
+  const [isNavVisible, setIsNavVisible] = useState<boolean>(true);
 
   const swiperOptions: SwiperProps = {
     modules: [Pagination, Navigation, FreeMode],
@@ -38,7 +39,13 @@ const Slider = ({ children, title, description }: Props) => {
     },
     spaceBetween: 50,
     onSwiper: (swiper) => {
-      setPaginationCount(swiper.snapGrid.length);
+      const paginationBulletCount = swiper.snapGrid.length;
+      setPaginationCount(paginationBulletCount);
+      if (paginationBulletCount <= 1) {
+        setIsNavVisible(false);
+      } else {
+        setIsNavVisible(true);
+      }
     },
     onSlideChange: (swiper) => {
       setActiveIndex(swiper.activeIndex);
@@ -67,29 +74,31 @@ const Slider = ({ children, title, description }: Props) => {
           <div className="xl:w-4/5 lg:1/2 w-full">
             <Heading title={title} description={description ?? ""} />
           </div>
-          <div className="xl:w-1/5 lg:w-1/2 bg-black lg:flex hidden items-center justify-between p-3 rounded-xl">
-            <button
-              className="size-11 bg-main-black text-2xl rounded-md text-white flex items-center justify-center"
-              onClick={() => slideTo("prev")}
-            >
-              <MdOutlineArrowBack />
-            </button>
-            <div className={`flex gap-1 w-1/2`}>
-              {Array.from({ length: paginationCount }).map((_, index) => (
-                <button
-                  onClick={() => slideTo(index)}
-                  key={`home-category-nav-${index}`}
-                  className={`${activeIndex === index ? "bg-main-red w-10" : "bg-secondary-black w-8"} transition-all inline-block h-1  rounded-md`}
-                ></button>
-              ))}
+          {isNavVisible ? (
+            <div className="xl:w-1/5 lg:w-1/2 bg-black lg:flex hidden items-center justify-between p-3 rounded-xl">
+              <button
+                className="size-11 bg-main-black text-2xl rounded-md text-white flex items-center justify-center"
+                onClick={() => slideTo("prev")}
+              >
+                <MdOutlineArrowBack />
+              </button>
+              <div className={`flex gap-1 w-1/2`}>
+                {Array.from({ length: paginationCount }).map((_, index) => (
+                  <button
+                    onClick={() => slideTo(index)}
+                    key={`home-category-nav-${index}`}
+                    className={`${activeIndex === index ? "bg-main-red w-10" : "bg-secondary-black w-8"} transition-all inline-block h-1  rounded-md`}
+                  ></button>
+                ))}
+              </div>
+              <button
+                className="size-11 bg-main-black text-2xl rounded-md text-white flex items-center justify-center"
+                onClick={() => slideTo("next")}
+              >
+                <MdOutlineArrowForward />
+              </button>
             </div>
-            <button
-              className="size-11 bg-main-black text-2xl rounded-md text-white flex items-center justify-center"
-              onClick={() => slideTo("next")}
-            >
-              <MdOutlineArrowForward />
-            </button>
-          </div>
+          ) : null}
         </div>
         <div className="">
           <Swiper {...swiperOptions} ref={swiperRef} className="homeGenreSlider">

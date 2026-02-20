@@ -3,11 +3,13 @@ import { Genre } from "../genre";
 
 export type Movie = {
   id: string;
+  slug: string;
   title: string;
   genres: Genre[];
   year: string;
   rating: number;
   description: string;
+  is_featured: boolean;
   //   type: string;
   trailer_urls: string[];
   images: string[];

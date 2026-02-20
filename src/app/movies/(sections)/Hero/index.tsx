@@ -1,5 +1,4 @@
 "use client";
-import { MOVIES } from "@/data/movie";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
@@ -7,10 +6,15 @@ import { FaPlay } from "react-icons/fa6";
 import { MdOutlineArrowBack, MdOutlineArrowForward } from "react-icons/md";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperProps, SwiperRef, SwiperSlide } from "swiper/react";
-import { FiPlus } from "react-icons/fi";
-import { AiOutlineLike, AiFillSound } from "react-icons/ai";
+// import { FiPlus } from "react-icons/fi";
+// import { AiOutlineLike, AiFillSound } from "react-icons/ai";
+import { Movie } from "@/types";
 
-const Hero = () => {
+interface Props {
+  featuredMovies: Movie[];
+}
+
+const Hero = ({ featuredMovies }: Props) => {
   const swiperRef = useRef<SwiperRef | null>(null);
   const swiperOptions: SwiperProps = {
     modules: [Navigation, Pagination],
@@ -27,8 +31,6 @@ const Hero = () => {
       },
     },
   };
-
-  const slides = MOVIES.slice(1, 4);
 
   const slideTo = (dir: "next" | "prev" | number) => {
     if (swiperRef.current) {
@@ -65,7 +67,7 @@ const Hero = () => {
           </div>
         </div>
         <Swiper className="size-full" ref={swiperRef} {...swiperOptions}>
-          {slides.map((slide, index) => (
+          {featuredMovies.map((slide, index) => (
             <SwiperSlide key={`movies-slide-${slide.id}-${index}`}>
               <div className="absolute top-0 left-0 z-40 size-full flex flex-col justify-between pointer-events-none bg-[linear-gradient(180deg,rgba(20,20,20,0.21)_0%,rgba(20,20,20,0.9)_73%)]">
                 <div className="lg:h-11/12 h-full flex flex-col items-center justify-end lg:py-14 py-3 text-center">
@@ -78,13 +80,13 @@ const Hero = () => {
 
                   <div className="flex lg:flex-row flex-col justify-center items-center gap-5 w-full">
                     <Link
-                      href="/movies"
-                      className="inline-flex items-center justify-center gap-2 rounded-md bg-main-red lg:py-[18.5px] py-3 px-6 lg:w-auto w-11/12 text-white  pointer-events-auto"
+                      href={`/movies/${slide.slug}`}
+                      className="inline-flex items-center justify-center gap-2 rounded-md bg-main-red lg:py-[18.5px] py-2 px-20 lg:w-auto w-11/12 text-white  pointer-events-auto"
                     >
                       <FaPlay size={18} />
                       <span>Play Now</span>
                     </Link>
-                    <div className="flex items-center gap-5">
+                    {/* <div className="flex items-center gap-5">
                       <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg  pointer-events-auto">
                         <FiPlus className="m-auto size-7" />
                       </button>
@@ -94,7 +96,7 @@ const Hero = () => {
                       <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg pointer-events-auto">
                         <AiFillSound className="m-auto size-7" />
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
