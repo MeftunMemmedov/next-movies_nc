@@ -17,6 +17,7 @@ export type Movie = {
   poster: string;
   poster_bg: string;
   directors: Artist[];
+  director: Artist;
   cast: Cast[];
   likes: string[];
   dislikes: string[];

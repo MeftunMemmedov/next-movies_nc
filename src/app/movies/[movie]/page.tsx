@@ -1,21 +1,23 @@
 import { Banner } from "./(sections)";
 import { CiCalendar } from "react-icons/ci";
 import { TbCategory } from "react-icons/tb";
-import { getData, getDataList } from "@/api/helpers";
-import { Cast, Movie } from "@/types";
 import CastSlider from "./(components)/CastSlider";
 import { LiaImdb } from "react-icons/lia";
+import Image from "next/image";
+import { createFakeImage } from "@/helpers/common";
+import { notFound } from "next/navigation";
+import { getMovieDetails } from "@/api/helpers/movie";
 
 const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) => {
   const { movie } = await params;
-  const currentMovie = await getData<Movie>("mov_movies", {
-    slug: `eq.${movie}`,
-  });
 
-  const cast = await getDataList<Cast>("mov_cast", {
-    movie_id: `eq.${currentMovie.id}`,
-    select: "*,actor:artist_id(*)",
-  });
+  const movieData = await getMovieDetails(movie);
+
+  if (!movieData) {
+    notFound();
+  }
+  const { movie: currentMovie, cast } = movieData;
+
   return (
     <main className="container">
       <Banner movie={currentMovie} />
@@ -74,11 +76,26 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
                 </strong>
               </div>
 
-              {/* <div className="mb-5">
+              <div className="mb-5">
                 <div className="text-gray-400 flex items-center gap-2 mb-3">
                   <h3>Directors</h3>
                 </div>
-                {currentMovie.directors.map((director, index) => (
+                {currentMovie.director ? (
+                  <div className="flex bg-main-black text-white mb-5 rounded-xl p-3">
+                    <div className="w-1/6 relative aspect-square rounded-md overflow-hidden">
+                      <Image
+                        src={currentMovie.director.image || createFakeImage(100, 100)}
+                        fill
+                        alt={`${currentMovie.title}-directed-by-${currentMovie.director.fullName}`}
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="w-3/4 pl-5 pt-3">
+                      <strong className="font-normal">{currentMovie.director.fullName}</strong>
+                    </div>
+                  </div>
+                ) : null}
+                {/* {currentMovie.directors.map((director, index) => (
                   <div
                     key={`director-${currentMovie.title}-${director.fullName}-${index}`}
                     className="flex bg-main-black text-white mb-5 rounded-xl p-3"
@@ -90,8 +107,8 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
                       <strong className="font-normal">{director.fullName}</strong>
                     </div>
                   </div>
-                ))}
-              </div> */}
+                ))} */}
+              </div>
             </div>
           </div>
         </div>

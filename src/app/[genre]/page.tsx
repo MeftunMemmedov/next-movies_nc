@@ -1,13 +1,17 @@
-import { getData, getDataList } from "@/api/helpers";
+import { getGenreDetails } from "@/api/helpers/genre";
 import MovieCard from "@/components/MovieCard";
-import { Genre, Movie } from "@/types";
+import { notFound } from "next/navigation";
 
 const MoviesByGenre = async ({ params }: { params: Promise<{ genre: string }> }) => {
   const { genre: slug } = await params;
+  const genreData = await getGenreDetails(slug);
 
-  const genre = await getData<Genre>("mov_genres", { slug: `eq.${slug}` });
+  if (!genreData) {
+    notFound();
+  }
 
-  const moviesByGenre = await getDataList<Movie>("mov_movies", { genres: `cs.{${genre.title}}` });
+  const { moviesByGenre, genre } = genreData;
+
   return (
     <main className="container pt-32">
       <section className="bg-secondary-black h-32 mb-20 text-white flex items-center px-10 rounded-md">
