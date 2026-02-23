@@ -7,11 +7,74 @@ import Image from "next/image";
 import { createFakeImage } from "@/helpers/common";
 import { notFound } from "next/navigation";
 import { getMovieDetails } from "@/api/helpers/movie";
+import { Metadata } from "next";
+import { getDataList } from "@/api/helpers";
+import { Movie } from "@/types";
+import { cache } from "react";
+
+export const revalidate = 3600;
+
+export const getMovie = cache(async (slug: string) => {
+  return await getMovieDetails(slug);
+});
+
+export const generateStaticParams = async () => {
+  const movies = await getDataList<Movie>("mov_movies", { select: "slug" });
+
+  return movies.map((mov) => ({ movie: mov.slug }));
+};
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ movie: string }>;
+}): Promise<Metadata | undefined> => {
+  const { movie } = await params;
+  const movieData = await getMovie(movie);
+  if (!movieData) return;
+  const { movie: currentMovie, cast } = movieData;
+
+  const cast_actors = cast.map((c) => c.actor.fullName);
+
+  const title_description = {
+    title: currentMovie.title,
+    description: currentMovie.description,
+  };
+
+  const images = [currentMovie.poster, currentMovie.poster_bg].map((image) => ({
+    url: image,
+    width: 1200,
+    height: 630,
+    alt: currentMovie.title,
+  }));
+  return {
+    ...title_description,
+    keywords: [...currentMovie.genres, ...cast_actors, "movies", "movie", "streaming"],
+    openGraph: {
+      ...title_description,
+      siteName: "movies.com",
+      images,
+      type: "website",
+    },
+    twitter: {
+      ...title_description,
+      card: "summary_large_image",
+      images,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    alternates: {
+      canonical: `movies.com/movies/${movie}`,
+    },
+  };
+};
 
 const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) => {
   const { movie } = await params;
 
-  const movieData = await getMovieDetails(movie);
+  const movieData = await getMovie(movie);
 
   if (!movieData) {
     notFound();
