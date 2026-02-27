@@ -45,7 +45,6 @@ export const generateMetadata = async ({
 const MoviesByGenre = async ({ params }: { params: Promise<{ genre: string }> }) => {
   const { genre: slug } = await params;
   const genreData = await getGenre(slug);
-
   if (!genreData) {
     notFound();
   }

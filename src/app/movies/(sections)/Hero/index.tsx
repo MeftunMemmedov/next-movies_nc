@@ -6,15 +6,18 @@ import { FaPlay } from "react-icons/fa6";
 import { MdOutlineArrowBack, MdOutlineArrowForward } from "react-icons/md";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperProps, SwiperRef, SwiperSlide } from "swiper/react";
-// import { FiPlus } from "react-icons/fi";
 // import { AiOutlineLike, AiFillSound } from "react-icons/ai";
 import { Movie } from "@/types";
+import { FiMinus, FiPlus } from "react-icons/fi";
+import { addToWatchlist, removeFromWatchlist } from "../../actions";
+import { useAppSelector } from "@/store/hooks";
 
 interface Props {
   featuredMovies: Movie[];
 }
 
 const Hero = ({ featuredMovies }: Props) => {
+  const { user, watchlist } = useAppSelector((store) => store.user);
   const swiperRef = useRef<SwiperRef | null>(null);
   const swiperOptions: SwiperProps = {
     modules: [Navigation, Pagination],
@@ -46,6 +49,7 @@ const Hero = ({ featuredMovies }: Props) => {
       }
     }
   };
+  if (typeof window == "undefined") return null;
   return (
     <section className="pt-32">
       <div className="xl:aspect-1594/835 md:aspect-1594/935 sm:aspect-358/468 aspect-358/568 relative pb-10">
@@ -86,17 +90,35 @@ const Hero = ({ featuredMovies }: Props) => {
                       <FaPlay size={18} />
                       <span>Play Now</span>
                     </Link>
-                    {/* <div className="flex items-center gap-5">
-                      <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg  pointer-events-auto">
-                        <FiPlus className="m-auto size-7" />
-                      </button>
-                      <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg pointer-events-auto">
+                    {user ? (
+                      <>
+                        <form className="flex items-center gap-5">
+                          <input type="hidden" name="userId" value={user.id} />
+                          <input type="hidden" name="movieId" value={slide.id} />
+                          {watchlist?.find((wm) => wm.movieId === slide.id) ? (
+                            <button
+                              formAction={removeFromWatchlist}
+                              className="lg:size-14 size-10 bg-main-red text-white hover:bg-white hover:text-black transition-colors rounded-lg  pointer-events-auto"
+                            >
+                              <FiMinus className="m-auto size-7" />
+                            </button>
+                          ) : (
+                            <button
+                              formAction={addToWatchlist}
+                              className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg  pointer-events-auto"
+                            >
+                              <FiPlus className="m-auto size-7" />
+                            </button>
+                          )}
+                          {/* <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg pointer-events-auto">
                         <AiOutlineLike className="m-auto size-7" />
-                      </button>
-                      <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg pointer-events-auto">
+                        </button>
+                        <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg pointer-events-auto">
                         <AiFillSound className="m-auto size-7" />
-                      </button>
-                    </div> */}
+                        </button> */}
+                        </form>
+                      </>
+                    ) : null}
                   </div>
                 </div>
               </div>

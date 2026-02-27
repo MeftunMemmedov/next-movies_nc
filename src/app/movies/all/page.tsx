@@ -52,7 +52,6 @@ interface Props {
 
 const AllMovies = async ({ searchParams }: Props) => {
   const { genre, agerating, year, imdb } = await searchParams;
-
   const params: Record<string, string | number | undefined> = {};
 
   if (genre) params.genres = `cs.{${genre}}`;

@@ -1,5 +1,6 @@
 import { Artist, Cast } from "../artist";
 import { Genre } from "../genre";
+import { WatchListMov } from "../watchlist";
 
 export type Movie = {
   id: string;
@@ -21,4 +22,5 @@ export type Movie = {
   cast: Cast[];
   likes: string[];
   dislikes: string[];
+  watchlist: WatchListMov[];
 };

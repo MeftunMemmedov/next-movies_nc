@@ -43,6 +43,7 @@ export const metadata: Metadata = {
 
 const Movies = async () => {
   const movies = await getDataList<Movie>("mov_movies");
+
   const featuredMovies = movies.filter((mov) => mov.is_featured === true);
   return (
     <main className="container">

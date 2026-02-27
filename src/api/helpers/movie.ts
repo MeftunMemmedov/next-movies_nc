@@ -3,13 +3,13 @@ import { getData, getDataList } from ".";
 
 export const getMovieDetails = async (
   slug: string
-): Promise<{ movie: Movie; cast: Cast[] } | null> => {
+): Promise<{ movie: Movie; cast: Cast[] } | void> => {
   const movie = await getData<Movie>("mov_movies", {
     slug: `eq.${slug}`,
     select: "*,director(*)",
   });
 
-  if (!movie) return null;
+  if (!movie) return;
 
   const cast = await getDataList<Cast>("mov_cast", {
     movie_id: `eq.${movie.id}`,

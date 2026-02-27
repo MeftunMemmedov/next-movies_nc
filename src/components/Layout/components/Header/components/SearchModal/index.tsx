@@ -1,5 +1,4 @@
 "use client";
-
 import { getDataList } from "@/api/helpers";
 import { Movie } from "@/types";
 import Image from "next/image";
