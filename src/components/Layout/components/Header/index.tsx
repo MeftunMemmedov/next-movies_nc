@@ -19,7 +19,7 @@ const Header = async () => {
     : [];
 
   return (
-    <header className="fixed w-full z-50">
+    <header className="fixed w-full z-50 bg-[linear-gradient(0deg,rgba(20,20,20,0)_11%,rgba(20,20,20,0.8)_78%)]">
       <div className="container text-white pt-3">
         <nav className="flex justify-between">
           <Logo />

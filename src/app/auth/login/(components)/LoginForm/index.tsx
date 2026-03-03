@@ -1,8 +1,8 @@
 "use client";
 import { useActionState } from "react";
 import { ActionState, loginAction } from "../../actions";
-import { ImSpinner10 } from "react-icons/im";
 import Link from "next/link";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const initialState = { errors: { email: null, password: null, details: null } };
 
@@ -42,13 +42,19 @@ const LoginForm = () => {
           type="submit"
           className="px-10 py-3 bg-main-red rounded-md font-bold text-white"
         >
-          {isPending ? <ImSpinner10 className="text-main-red animate-spin" /> : "Sign Up"}
+          {isPending ? (
+            <div className="text-main-red">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            "Sign Up"
+          )}
         </button>
       </div>
       <p className="text-white mt-5">
         No account?{" "}
         <Link href="/auth/register" className="text-main-red">
-          Sign up
+          Sign in
         </Link>
         now
       </p>

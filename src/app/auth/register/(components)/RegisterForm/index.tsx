@@ -1,8 +1,8 @@
 "use client";
 import { useActionState } from "react";
 import { ActionState, registerAction } from "../../actions";
-import { ImSpinner10 } from "react-icons/im";
 import Link from "next/link";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const initialState = { errors: { email: null, username: null, password: null, details: null } };
 const RegisterForm = () => {
@@ -42,13 +42,19 @@ const RegisterForm = () => {
           type="submit"
           className="px-10 py-3 bg-black text-sm rounded-md font-bold text-white"
         >
-          {isPending ? <ImSpinner10 className="text-main-red animate-spin" /> : "Sign Up"}
+          {isPending ? (
+            <div className="text-main-red">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            "Sign Up"
+          )}
         </button>
         {!isPending ? (
           <p className="text-white mt-5">
             Have an account?{" "}
             <Link href="/auth/login" className="text-main-red">
-              Sign in
+              Sign Up
             </Link>{" "}
             now
           </p>

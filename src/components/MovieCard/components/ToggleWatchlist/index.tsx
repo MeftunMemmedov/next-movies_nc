@@ -1,17 +1,19 @@
 "use client";
 import { addToWatchlist, removeFromWatchlist } from "@/app/movies/actions";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { useAppSelector } from "@/store/hooks";
 import { usePathname } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
-import { ImSpinner10 } from "react-icons/im";
 
 const Button = ({ isSaved }: { isSaved: boolean }) => {
   const { pending } = useFormStatus();
   return (
     <button className="text-3xl text-white float-end m-4" disabled={pending}>
       {pending ? (
-        <ImSpinner10 size={20} className="text-main-red animate-spin" />
+        <div className="text-main-red text-xl">
+          <LoadingSpinner />
+        </div>
       ) : isSaved ? (
         <FaBookmark />
       ) : (

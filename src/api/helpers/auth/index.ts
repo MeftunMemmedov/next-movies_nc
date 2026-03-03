@@ -1,4 +1,5 @@
 import axiosAuthInstance from "@/api/auth";
+import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 
 export const signUp = async (
@@ -25,6 +26,11 @@ export const getRefreshSession = async (refresh_token: string) => {
     refresh_token,
   });
 
+  const cookieStore = await cookies();
+
+  cookieStore.set("access", data.access_token, { httpOnly: true, secure: true, path: "/" });
+  cookieStore.set("refresh", data.refresh_token, { httpOnly: true, secure: true, path: "/" });
+
   return data;
 };
 
@@ -41,21 +47,40 @@ export const getUser = async (access_token: string) => {
 };
 
 export const getSession = async () => {
-  const token = (await cookies()).get("access")?.value;
+  const cookieStore = await cookies();
 
-  if (!token) return null;
+  const access_token = cookieStore.get("access")?.value;
+  const refresh_token = cookieStore.get("refresh")?.value;
 
+  if (!access_token) return null;
   try {
-    return await getUser(token);
-  } catch (error) {
+    return await getUser(access_token);
+  } catch (err) {
+    if (err instanceof AxiosError)
+      if (err?.response?.status === 401 && refresh_token) {
+        try {
+          const refreshed = await getRefreshSession(refresh_token);
+          return await getUser(refreshed.access_token);
+        } catch {
+          return null;
+        }
+      }
     return null;
   }
 };
 
-export const logOut = async (access_token: string) => {
-  await axiosAuthInstance.post(
-    "logout",
-    {},
-    { headers: { Authorization: `Bearer ${access_token}` } }
-  );
+export const logOut = async () => {
+  const cookieStore = await cookies();
+  const access_token = cookieStore.get("access")?.value;
+  try {
+    await axiosAuthInstance.post(
+      "logout",
+      {},
+      { headers: { Authorization: `Bearer ${access_token}` } }
+    );
+    cookieStore.delete("access");
+    cookieStore.delete("refresh");
+  } catch {
+    throw "An error occured while logging out";
+  }
 };

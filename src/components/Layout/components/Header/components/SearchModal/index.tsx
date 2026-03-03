@@ -6,45 +6,48 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { IoIosCloseCircle, IoIosCloseCircleOutline } from "react-icons/io";
-import { ImSpinner10 } from "react-icons/im";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const SearchModal = () => {
   const [isSearchmodalActive, setIsSearchmodalActive] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
   const [debouncedVal, setDebouncedVal] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [, setError] = useState<string>("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error" | "finished">(
+    "idle"
+  );
   const [results, setResults] = useState<Movie[]>([]);
 
   const getResults = async () => {
-    if (debouncedVal === "") return;
-    setIsLoading(true);
+    setStatus("loading");
     try {
       const res = await getDataList<Movie>("mov_movies", {
-        title: `ilike.%${debouncedVal}%`,
+        title: `ilike.%${debouncedVal.trim()}%`,
         limit: 5,
       });
       setResults(res);
+      setStatus("success");
     } catch {
-      setError("An error occured. Please try again.");
+      setStatus("error");
     } finally {
-      setIsLoading(false);
+      setStatus("finished");
     }
   };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      if (searchInput !== "") {
-        const timeOut = setTimeout(() => {
-          setDebouncedVal(searchInput);
-        }, 500);
+      const timeOut = setTimeout(() => {
+        setDebouncedVal(searchInput);
+      }, 500);
 
-        return () => clearTimeout(timeOut);
-      }
+      return () => clearTimeout(timeOut);
     }
   }, [searchInput]);
 
   useEffect(() => {
+    if (debouncedVal === "") {
+      setResults([]);
+      return;
+    }
     getResults();
   }, [debouncedVal]);
 
@@ -98,12 +101,20 @@ const SearchModal = () => {
                 </div>
               </div>
             </form>
-            <div className="overflow-auto h-50 pt-2 px-10">
-              {isLoading ? (
+            <div className="overflow-auto h-50 pt-4 px-10">
+              {status === "loading" && (
                 <div className="flex justify-center items-center py-20">
-                  <ImSpinner10 className="text-main-red text-4xl animate-spin" />
+                  <div className="text-main-red text-4xl">
+                    <LoadingSpinner />
+                  </div>
                 </div>
-              ) : (
+              )}
+              {debouncedVal === "" && (
+                <div className="py-16 text-center text-gray-400">
+                  <p>Start typing to search movies</p>
+                </div>
+              )}
+              {results.length > 0 &&
                 results.map((result, index) => (
                   <Link
                     href={`/movies/${result.slug}`}
@@ -122,14 +133,17 @@ const SearchModal = () => {
                     </div>
                     <span className="text-sm text-gray-400">{result.year}</span>
                   </Link>
-                ))
-              )}
-
-              {searchInput !== "" && !isLoading && results.length === 0 ? (
+                ))}
+              {(status === "success" || status === "finished") && results.length === 0 && (
                 <div className="py-10 text-center text-white">
                   <p>No result found</p>
                 </div>
-              ) : null}
+              )}
+              {status === "error" && (
+                <div className="py-10 text-center text-red-800">
+                  <p>An error occured. Please try again.</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

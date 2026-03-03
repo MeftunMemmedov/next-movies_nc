@@ -8,9 +8,9 @@ import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperProps, SwiperRef, SwiperSlide } from "swiper/react";
 // import { AiOutlineLike, AiFillSound } from "react-icons/ai";
 import { Movie } from "@/types";
-import { FiMinus, FiPlus } from "react-icons/fi";
-import { addToWatchlist, removeFromWatchlist } from "../../actions";
 import { useAppSelector } from "@/store/hooks";
+import { usePathname } from "next/navigation";
+import ToggleWatchlistHeroBtn from "./components/ToggleWatchlistHeroBtn";
 
 interface Props {
   featuredMovies: Movie[];
@@ -18,6 +18,7 @@ interface Props {
 
 const Hero = ({ featuredMovies }: Props) => {
   const { user, watchlist } = useAppSelector((store) => store.user);
+  const pathname = usePathname();
   const swiperRef = useRef<SwiperRef | null>(null);
   const swiperOptions: SwiperProps = {
     modules: [Navigation, Pagination],
@@ -95,21 +96,8 @@ const Hero = ({ featuredMovies }: Props) => {
                         <form className="flex items-center gap-5">
                           <input type="hidden" name="userId" value={user.id} />
                           <input type="hidden" name="movieId" value={slide.id} />
-                          {watchlist?.find((wm) => wm.movieId === slide.id) ? (
-                            <button
-                              formAction={removeFromWatchlist}
-                              className="lg:size-14 size-10 bg-main-red text-white hover:bg-white hover:text-black transition-colors rounded-lg  pointer-events-auto"
-                            >
-                              <FiMinus className="m-auto size-7" />
-                            </button>
-                          ) : (
-                            <button
-                              formAction={addToWatchlist}
-                              className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg  pointer-events-auto"
-                            >
-                              <FiPlus className="m-auto size-7" />
-                            </button>
-                          )}
+                          <input type="hidden" name="pathname" value={pathname} />
+                          <ToggleWatchlistHeroBtn watchlist={watchlist} slide={slide} />
                           {/* <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg pointer-events-auto">
                         <AiOutlineLike className="m-auto size-7" />
                         </button>
