@@ -10,7 +10,7 @@ import { Swiper, SwiperProps, SwiperRef, SwiperSlide } from "swiper/react";
 import { Movie } from "@/types";
 import { useAppSelector } from "@/store/hooks";
 import { usePathname } from "next/navigation";
-import ToggleWatchlistHeroBtn from "./components/ToggleWatchlistHeroBtn";
+import ToggleWatchlistHeroBtn from "../../../../components/ToggleWatchlistHeroBtn";
 
 interface Props {
   featuredMovies: Movie[];

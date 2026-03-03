@@ -12,7 +12,7 @@ export type Movie = {
   description: string;
   is_featured: boolean;
   //   type: string;
-  trailer_urls: string[];
+  trailer_url: string;
   images: string[];
   age_rating: string;
   poster: string;

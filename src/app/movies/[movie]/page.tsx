@@ -11,6 +11,7 @@ import { Metadata } from "next";
 import { getDataList } from "@/api/helpers";
 import { Movie } from "@/types";
 import { cache } from "react";
+import TrailerPlayer from "./(components)/TrailerPlayer";
 
 export const revalidate = 3600;
 
@@ -90,6 +91,9 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
             <div className="p-12.5 rounded-xl bg-secondary-black">
               <h3 className="text-gray-400 mb-3.5">Description</h3>
               <p className="text-white">{currentMovie.description}</p>
+            </div>
+            <div>
+              <TrailerPlayer url={currentMovie.trailer_url} />
             </div>
             <div>
               <CastSlider cast={cast} />

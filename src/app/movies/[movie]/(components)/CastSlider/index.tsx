@@ -28,11 +28,8 @@ const CastSlider = ({ cast }: { cast: Cast[] }) => {
       768: {
         slidesPerView: 3,
       },
-      500: {
-        slidesPerView: 2,
-      },
       0: {
-        slidesPerView: 1,
+        slidesPerView: 2,
       },
     },
     spaceBetween: 20,

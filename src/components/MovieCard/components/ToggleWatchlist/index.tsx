@@ -31,7 +31,11 @@ const ToggleWatchlist = ({ movieId }: { movieId: string }) => {
   const action = isSaved ? removeFromWatchlist : addToWatchlist;
   return (
     <>
-      <form className="absolute w-full -top-40 group-hover:top-0 transition-all" action={action}>
+      <form
+        className="absolute w-full -top-40 group-hover:top-0 z-30 transition-all"
+        action={action}
+        onClick={(e) => e.stopPropagation()}
+      >
         <input type="hidden" name="userId" value={user.id} />
         <input type="hidden" name="movieId" value={movieId} />
         <input type="hidden" name="pathname" value={pathname} />

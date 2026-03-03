@@ -1,9 +1,6 @@
 import { Movie } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
-import { AiFillSound, AiOutlineLike } from "react-icons/ai";
-import { FaPlay } from "react-icons/fa6";
-import { FiPlus } from "react-icons/fi";
+import UserActions from "./components/UserActions";
 
 const Banner = ({ movie }: { movie: Movie }) => {
   return (
@@ -17,24 +14,14 @@ const Banner = ({ movie }: { movie: Movie }) => {
             </p>
 
             <div className="flex lg:flex-row flex-col justify-center items-center gap-5 w-full">
-              <Link
+              {/* <Link
                 href="/movies"
                 className="inline-flex items-center justify-center gap-2 rounded-md bg-main-red lg:py-3.5 py-3 px-6 lg:w-auto w-11/12 text-white  pointer-events-auto"
               >
                 <FaPlay size={18} />
                 <span>Play Now</span>
-              </Link>
-              <div className="flex items-center gap-5">
-                <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg  pointer-events-auto">
-                  <FiPlus className="m-auto size-7" />
-                </button>
-                <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg pointer-events-auto">
-                  <AiOutlineLike className="m-auto size-7" />
-                </button>
-                <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg pointer-events-auto">
-                  <AiFillSound className="m-auto size-7" />
-                </button>
-              </div>
+              </Link> */}
+              <UserActions movie={movie} />
             </div>
           </div>
         </div>
