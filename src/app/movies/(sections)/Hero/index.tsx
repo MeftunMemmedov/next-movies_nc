@@ -86,7 +86,7 @@ const Hero = ({ featuredMovies }: Props) => {
                   <div className="flex lg:flex-row flex-col justify-center items-center gap-5 w-full">
                     <Link
                       href={`/movies/${slide.slug}`}
-                      className="inline-flex items-center justify-center gap-2 rounded-md bg-main-red lg:py-[18.5px] py-2 px-20 lg:w-auto w-11/12 text-white  pointer-events-auto"
+                      className="inline-flex items-center justify-center gap-2 rounded-md bg-main-red lg:py-[18.5px] py-2 lg:px-20 px-10 lg:w-auto w-11/12 text-white  pointer-events-auto"
                     >
                       <FaPlay size={18} />
                       <span>Play Now</span>

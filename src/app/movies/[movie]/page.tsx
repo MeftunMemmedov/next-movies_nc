@@ -88,7 +88,7 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
       <article>
         <div className="flex lg:flex-row flex-col gap-5 mt-36.5">
           <div className="lg:w-[65%] w-full flex flex-col gap-7.5">
-            <div className="p-12.5 rounded-xl bg-secondary-black">
+            <div className="md:p-12.5 p-8 rounded-xl bg-secondary-black">
               <h2 className="text-gray-400 mb-3.5">Description</h2>
               <p className="text-white">{currentMovie.description}</p>
             </div>
@@ -100,7 +100,7 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
             </div>
           </div>
           <div className="lg:w-[35%] w-full">
-            <div className="p-12.5 rounded-xl bg-secondary-black">
+            <div className="md:p-12.5 p-8 rounded-xl bg-secondary-black">
               <div className="mb-5">
                 <div className="text-gray-400 flex items-center gap-2 mb-3">
                   <CiCalendar />

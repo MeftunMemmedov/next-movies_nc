@@ -40,7 +40,7 @@ const Header = async () => {
           </div>
 
           <div className="lg:hidden flex items-center justify-center">
-            <MobileMenu />
+            <MobileMenu user={user} />
           </div>
         </nav>
       </div>

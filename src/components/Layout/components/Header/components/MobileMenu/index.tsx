@@ -9,8 +9,9 @@ import { usePathname } from "next/navigation";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getGenreList } from "@/store/data/actions";
+import { User } from "@/types";
 
-const MobileMenu = () => {
+const MobileMenu = ({ user }: { user: User }) => {
   const dispatch = useAppDispatch();
   const { genres } = useAppSelector((store) => store.data);
   const pathname = usePathname();
@@ -59,17 +60,39 @@ const MobileMenu = () => {
             </button>
           </div>
           <nav>
-            <ul className="flex flex-col items-end gap-2">
+            <ul className="flex flex-col items-end gap-4 font-semibold">
               {navLinks.map((link, index) => (
                 <li key={`header-mobilemenu-navlink-${link.path}-${index}`}>
                   <Link
                     href={link.path}
                     className={`${pathname.endsWith(link.path) ? "text-main-red" : ""} text-xl text-end`}
+                    onClick={() => setIsMobilemenuActive(false)}
                   >
                     {link.title}
                   </Link>
                 </li>
               ))}
+              {user ? (
+                <li>
+                  <Link
+                    href="/account/dashboard"
+                    className="text-xl text-end"
+                    onClick={() => setIsMobilemenuActive(false)}
+                  >
+                    Account
+                  </Link>
+                </li>
+              ) : (
+                <li>
+                  <Link
+                    href="/auth/login"
+                    className="text-xl text-end"
+                    onClick={() => setIsMobilemenuActive(false)}
+                  >
+                    Login
+                  </Link>
+                </li>
+              )}
               <li className="text-end">
                 <button
                   className="flex items-center justify-end w-full gap-2"
@@ -77,11 +100,11 @@ const MobileMenu = () => {
                     if (isMobilemenuActive) setIsGenremenuActive((prevState) => !prevState);
                   }}
                 >
+                  <h3 className="text-xl font-semibold mb-3">Genres</h3>
                   <IoMdArrowDropdown
                     color="white"
                     className={`mb-2 ${isGenremenuActive ? "rotate-180" : "rotate-0"} transition-transform duration-100`}
                   />
-                  <h3 className="text-xl font-semibold mb-3">Genres</h3>
                 </button>
                 <ul
                   className={`flex flex-col gap-2 ${isGenremenuActive ? "max-h-100" : "max-h-0"} transition-all duration-100 overflow-hidden`}

@@ -64,11 +64,13 @@ const SearchModal = () => {
           className="fixed top-0 left-0 w-full h-screen flex justify-center items-center bg-black/30"
           onClick={() => setIsSearchmodalActive(false)}
         >
-          <div className="bg-secondary-black w-200 pb-20 rounded-2xl">
+          <div
+            className="bg-secondary-black w-200 pb-20 rounded-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <form
-              onSubmit={(e) => e.preventDefault()}
+              // onSubmit={(e) => e.preventDefault()}
               className=" flex flex-col"
-              onClick={(e) => e.stopPropagation()}
             >
               <div className="pb-10 pt-5 px-5">
                 <button onClick={() => setIsSearchmodalActive(false)} className="float-right">

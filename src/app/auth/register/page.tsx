@@ -1,7 +1,11 @@
 import { notFound } from "next/navigation";
 import RegisterForm from "./(components)/RegisterForm";
 import { getSession } from "@/api/helpers/auth";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Movies | Sign Up",
+};
 const Register = async () => {
   const user = await getSession();
 

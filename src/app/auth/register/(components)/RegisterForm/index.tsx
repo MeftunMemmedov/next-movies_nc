@@ -13,7 +13,10 @@ const RegisterForm = () => {
   ];
   const [state, formAction, isPending] = useActionState(registerAction, initialState);
   return (
-    <form action={formAction} className="lg:px-20 px-10 py-15 bg-secondary-black rounded-2xl">
+    <form
+      action={formAction}
+      className="lg:px-20 px-5 lg:py-15 py-10 md:w-auto w-11/12 bg-secondary-black rounded-2xl"
+    >
       <h3 className="text-white text-4xl font-bold mb-8">Sign Up</h3>
       {state.errors.details && (
         <div className="bg-red-950 py-2 rounded-md mb-4" role="alert">
