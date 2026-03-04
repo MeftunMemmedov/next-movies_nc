@@ -57,7 +57,7 @@ const RegisterForm = () => {
           <p className="text-white mt-5">
             Have an account?{" "}
             <Link href="/auth/login" className="text-main-red">
-              Sign Up
+              Sign In
             </Link>{" "}
             now
           </p>

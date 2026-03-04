@@ -57,7 +57,7 @@ const LoginForm = () => {
       <p className="text-white mt-5">
         No account?{" "}
         <Link href="/auth/register" className="text-main-red">
-          Sign In
+          Sign Up
         </Link>{" "}
         now
       </p>

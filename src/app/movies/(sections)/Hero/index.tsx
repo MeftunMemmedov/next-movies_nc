@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { FaPlay } from "react-icons/fa6";
 import { MdOutlineArrowBack, MdOutlineArrowForward } from "react-icons/md";
 import { Navigation, Pagination } from "swiper/modules";
@@ -20,8 +20,14 @@ const Hero = ({ featuredMovies }: Props) => {
   const { user, watchlist } = useAppSelector((store) => store.user);
   const pathname = usePathname();
   const swiperRef = useRef<SwiperRef | null>(null);
+
+  const [sliderStatus, setSliderStatus] = useState<"beginning" | "end">("beginning");
   const swiperOptions: SwiperProps = {
     modules: [Navigation, Pagination],
+    onSlideChange(swiper) {
+      if (swiper.isBeginning) setSliderStatus("beginning");
+      if (swiper.isEnd) setSliderStatus("end");
+    },
     breakpoints: {
       768: {
         pagination: {
@@ -50,22 +56,25 @@ const Hero = ({ featuredMovies }: Props) => {
       }
     }
   };
-  if (typeof window == "undefined") return null;
+
+  if (!featuredMovies || featuredMovies.length === 0) return null;
   return (
     <section className="pt-32">
       <div className="xl:aspect-1594/835 md:aspect-1594/935 sm:aspect-358/468 aspect-358/568 relative pb-10">
         <div className="absolute top-0 left-0 z-30 size-full lg:flex hidden flex-col justify-end pointer-events-none lg:px-10 px-1 pb-14">
           <div className="h-14 flex justify-between items-center">
             <button
-              className="size-11 bg-main-black hover:bg-white hover:text-black transition-colors text-2xl rounded-md text-white flex items-center justify-center pointer-events-auto"
+              className={`size-11 bg-main-black ${sliderStatus === "beginning" ? "text-gray-500" : "hover:bg-white hover:text-black transition-colors text-white"} transition-colors text-2xl rounded-md  flex items-center justify-center pointer-events-auto`}
               onClick={() => slideTo("prev")}
+              disabled={sliderStatus === "beginning"}
             >
               <MdOutlineArrowBack />
             </button>
-            <div className="w-1/2 "></div>
+            {/* <div className="w-1/2"></div> */}
             <button
-              className="size-11 bg-main-black hover:bg-white hover:text-black transition-colors text-2xl rounded-md text-white flex items-center justify-center pointer-events-auto"
+              className={`size-11 bg-main-black ${sliderStatus === "end" ? "text-gray-500" : "hover:bg-white hover:text-black transition-colors text-white"} text-2xl rounded-md flex items-center justify-center pointer-events-auto`}
               onClick={() => slideTo("next")}
+              disabled={sliderStatus === "end"}
             >
               <MdOutlineArrowForward />
             </button>
@@ -115,7 +124,7 @@ const Hero = ({ featuredMovies }: Props) => {
                 width={500}
                 height={300}
                 className="size-full object-cover"
-                alt=""
+                alt={slide.title}
               />
             </SwiperSlide>
           ))}

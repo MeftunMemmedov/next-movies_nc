@@ -60,40 +60,43 @@ const MobileMenu = ({ user }: { user: User }) => {
             </button>
           </div>
           <nav>
-            <ul className="flex flex-col items-end gap-4 font-semibold">
+            <ul className="font-semibold text-xl text-center ">
               {navLinks.map((link, index) => (
-                <li key={`header-mobilemenu-navlink-${link.path}-${index}`}>
+                <li key={`header-mobilemenu-navlink-${link.path}-${index}`} className="w-full mb-8">
                   <Link
                     href={link.path}
-                    className={`${pathname.endsWith(link.path) ? "text-main-red" : ""} text-xl text-end`}
+                    className={`${pathname.endsWith(link.path) ? "text-main-red" : ""}`}
                     onClick={() => setIsMobilemenuActive(false)}
                   >
                     {link.title}
                   </Link>
+                  <div className="h-px w-full bg-linear-to-l from-transparent via-red-500/70 to-transparent"></div>
                 </li>
               ))}
               {user ? (
                 <li>
                   <Link
                     href="/account/dashboard"
-                    className="text-xl text-end"
+                    className="w-full text-center mb-8"
                     onClick={() => setIsMobilemenuActive(false)}
                   >
                     Account
                   </Link>
+                  <div className="h-px w-full bg-linear-to-l from-transparent via-red-500/70 to-transparent"></div>
                 </li>
               ) : (
                 <li>
                   <Link
                     href="/auth/login"
-                    className="text-xl text-end"
+                    className="w-full text-center mb-8"
                     onClick={() => setIsMobilemenuActive(false)}
                   >
                     Login
                   </Link>
+                  <div className="h-px w-full bg-linear-to-l from-transparent via-red-500/70 to-transparent"></div>
                 </li>
               )}
-              <li className="text-end">
+              <li className="text-end mt-5">
                 <button
                   className="flex items-center justify-end w-full gap-2"
                   onClick={() => {

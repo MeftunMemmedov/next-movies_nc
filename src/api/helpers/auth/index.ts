@@ -36,9 +36,6 @@ export const getRefreshSession = async (refresh_token: string) => {
 
 export const getUser = async (access_token: string) => {
   const { data } = await axiosAuthInstance.get("user", {
-    params: {
-      select: "id,user_metadata",
-    },
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
@@ -56,7 +53,8 @@ export const getSession = async () => {
   try {
     return await getUser(access_token);
   } catch (err) {
-    if (err instanceof AxiosError)
+    if (err instanceof AxiosError) {
+      console.log(err.response);
       if (err?.response?.status === 401 && refresh_token) {
         try {
           const refreshed = await getRefreshSession(refresh_token);
@@ -67,6 +65,7 @@ export const getSession = async () => {
           return null;
         }
       }
+    }
     return null;
   }
 };

@@ -1,8 +1,11 @@
 import Link from "next/link";
-import { Hero, NewRelases, OurGenres } from "./(sections)";
+import { NewRelases, OurGenres } from "./(sections)";
 import { getDataList } from "@/api/helpers";
 import { Movie } from "@/types";
 import { Metadata } from "next";
+import dynamic from "next/dynamic";
+
+const Hero = dynamic(() => import("@/app/movies/(sections)/Hero"));
 
 const title_description = {
   title: "All Movies",

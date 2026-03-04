@@ -28,8 +28,11 @@ const userSlice = createSlice({
     setWatchlist: (state, action) => {
       state.watchlist = action.payload;
     },
+    clearUser: (state) => {
+      state.user = null;
+    },
   },
 });
 
-export const { setUser, setWatchlist } = userSlice.actions;
+export const { setUser, setWatchlist, clearUser } = userSlice.actions;
 export default userSlice.reducer;
