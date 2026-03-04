@@ -49,7 +49,6 @@ const Movies = async () => {
     <main className="container">
       <Hero featuredMovies={featuredMovies} />
       <OurGenres />
-      {/* <TrendingNow /> */}
       <NewRelases movies={movies} />
       <div className="pt-15 flex justify-center">
         <Link href="/movies/all" className="py-3 px-10 bg-main-red text-white rounded-md">

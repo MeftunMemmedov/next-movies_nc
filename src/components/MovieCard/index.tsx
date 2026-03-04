@@ -5,7 +5,7 @@ import ToggleWatchlist from "./components/ToggleWatchlist";
 
 const MovieCard = ({ movie }: { movie: Movie }) => {
   return (
-    <div className="inline-block rounded-md p-6 bg-secondary-black aspect-239/282">
+    <article className="inline-block rounded-md p-6 bg-secondary-black aspect-239/282">
       <Link
         href={`/movies/${movie.slug}`}
         className="aspect-2/3 rounded-md overflow-hidden relative inline-block hover:scale-110 transition-transform"
@@ -14,21 +14,23 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
           <div className="relative size-full">
             <ToggleWatchlist movieId={movie.id} />
             <div className="text-center absolute w-full -bottom-40 group-hover:bottom-0 transition-all text-white">
-              <strong className="inline-block fomt-semibold hover:text-main-red hover:scale-120 transition-all">
+              <h2 className="inline-block fomt-semibold hover:text-main-red hover:scale-120 transition-all">
                 {movie.title}
-              </strong>
+              </h2>
             </div>
           </div>
         </div>
-        <Image
-          src={movie.poster}
-          width={190}
-          height={210}
-          className="size-full object-cover"
-          alt={movie.title}
-        />
+        <figure className="size-full">
+          <Image
+            src={movie.poster}
+            width={190}
+            height={210}
+            className="size-full object-cover"
+            alt={`${movie.title} official movie poster`}
+          />
+        </figure>
       </Link>
-    </div>
+    </article>
   );
 };
 

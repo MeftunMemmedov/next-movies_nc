@@ -39,7 +39,7 @@ const Select = ({ queryName, defaultOptionText, options }: Props) => {
         />
       </button>
       <ul
-        className={`custom-select-option-list bg-main-black scroll- z-20 w-full md:absolute md:top-6 md:left-0 rounded-b-lg overflow-auto transition-all ${isSelectActive ? "max-h-56 pb-4 pt-5" : "max-h-0"}`}
+        className={`custom-scrollbar bg-main-black scroll- z-20 w-full md:absolute md:top-6 md:left-0 rounded-b-lg overflow-auto transition-all ${isSelectActive ? "max-h-56 pb-4 pt-5" : "max-h-0"}`}
       >
         {urlSearchParams.get(queryName) !== null ? (
           <li

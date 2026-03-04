@@ -17,22 +17,6 @@ const SearchModal = () => {
   );
   const [results, setResults] = useState<Movie[]>([]);
 
-  const getResults = async () => {
-    setStatus("loading");
-    try {
-      const res = await getDataList<Movie>("mov_movies", {
-        title: `ilike.%${debouncedVal.trim()}%`,
-        limit: 5,
-      });
-      setResults(res);
-      setStatus("success");
-    } catch {
-      setStatus("error");
-    } finally {
-      setStatus("finished");
-    }
-  };
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       const timeOut = setTimeout(() => {
@@ -44,10 +28,20 @@ const SearchModal = () => {
   }, [searchInput]);
 
   useEffect(() => {
-    if (debouncedVal === "") {
-      setResults([]);
-      return;
-    }
+    if (debouncedVal === "") return;
+    const getResults = async () => {
+      try {
+        setStatus("loading");
+        const res = await getDataList<Movie>("mov_movies", {
+          title: `ilike.%${debouncedVal.trim()}%`,
+          limit: 5,
+        });
+        setResults(res);
+        setStatus("success");
+      } catch {
+        setStatus("error");
+      }
+    };
     getResults();
   }, [debouncedVal]);
 
@@ -87,7 +81,16 @@ const SearchModal = () => {
                   className="border-b px-5 m-auto w-full h-10 focus:outline-0"
                   placeholder="Search movie"
                   value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setSearchInput(value);
+                    if (value === "") {
+                      setResults([]);
+                      setStatus("idle");
+                    } else {
+                      setStatus("loading");
+                    }
+                  }}
                 />
                 <div className="flex items-center gap-2 absolute right-0 bottom-1 pr-5">
                   <button>
@@ -101,40 +104,48 @@ const SearchModal = () => {
                 </div>
               </div>
             </form>
-            <div className="overflow-auto h-50 pt-4 px-10">
-              {status === "loading" && (
+            <div className=" h-50 pt-4 px-10">
+              {status === "loading" ? (
                 <div className="flex justify-center items-center py-20">
                   <div className="text-main-red text-4xl">
                     <LoadingSpinner />
                   </div>
                 </div>
+              ) : (
+                results.length > 0 && (
+                  <ul className="h-full overflow-y-auto custom-scrollbar">
+                    {results.map((result, index) => (
+                      <li
+                        key={`result-${result.title}-${index}-${result.slug}`}
+                        className="custom-scrollbar"
+                      >
+                        <Link
+                          href={`/movies/${result.slug}`}
+                          className="text-white inline-flex w-full hover:scale-105 transition-transform items-center justify-between p-3 rounded-md bg-main-black mb-3"
+                        >
+                          <div className="flex items-center gap-4">
+                            <Image
+                              width={200}
+                              height={300}
+                              src={result.poster}
+                              className="aspect-2/3 w-10 rounded-sm"
+                              alt={result.title}
+                            />
+                            <h2 className="text-xl font-semibold">{result.title}</h2>
+                          </div>
+                          <h3 className="text-sm text-gray-400">{result.year}</h3>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )
               )}
-              {debouncedVal === "" && (
+              {debouncedVal === "" && status === "idle" && (
                 <div className="py-16 text-center text-gray-400">
                   <p>Start typing to search movies</p>
                 </div>
               )}
-              {results.length > 0 &&
-                results.map((result, index) => (
-                  <Link
-                    href={`/movies/${result.slug}`}
-                    className="text-white inline-flex w-full hover:scale-105 transition-transform items-center justify-between p-3 rounded-md bg-main-black mb-3"
-                    key={`result-${result.title}-${index}-${result.slug}`}
-                  >
-                    <div className="flex items-center gap-4">
-                      <Image
-                        width={200}
-                        height={300}
-                        src={result.poster}
-                        className="aspect-2/3 w-10 rounded-sm"
-                        alt={result.title}
-                      />
-                      <h3 className="text-xl font-semibold">{result.title}</h3>
-                    </div>
-                    <span className="text-sm text-gray-400">{result.year}</span>
-                  </Link>
-                ))}
-              {(status === "success" || status === "finished") && results.length === 0 && (
+              {status === "success" && results.length === 0 && (
                 <div className="py-10 text-center text-white">
                   <p>No result found</p>
                 </div>

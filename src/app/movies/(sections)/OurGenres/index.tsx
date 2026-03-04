@@ -3,9 +3,11 @@ import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { createFakeImage } from "@/helpers/common";
 import { MdOutlineArrowForward } from "react-icons/md";
-import Slider from "@/components/Slider";
 import { useAppSelector } from "@/store/hooks";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const Slider = dynamic(() => import("@/components/Slider"), { ssr: false });
 
 const OurGenres = () => {
   const { genres } = useAppSelector((store) => store.data);

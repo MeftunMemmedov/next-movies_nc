@@ -1,11 +1,14 @@
 "use client";
-import Slider from "@/components/Slider";
+
 import { createFakeImage } from "@/helpers/common";
 import { useAppSelector } from "@/store/hooks";
 import Image from "next/image";
 import Link from "next/link";
 import { MdOutlineArrowForward } from "react-icons/md";
 import { SwiperSlide } from "swiper/react";
+import dynamic from "next/dynamic";
+
+const Slider = dynamic(() => import("@/components/Slider"), { ssr: false });
 
 const CategorySlider = () => {
   const { genres } = useAppSelector((store) => store.data);
@@ -29,7 +32,7 @@ const CategorySlider = () => {
               />
             </div>
             <Link href={`/${genre.slug}`} className="text-white flex items-center justify-between">
-              <h3>{genre.title}</h3>
+              <h2>{genre.title}</h2>
               <MdOutlineArrowForward size={30} />
             </Link>
           </div>

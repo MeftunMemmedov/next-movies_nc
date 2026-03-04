@@ -60,8 +60,10 @@ export const getSession = async () => {
       if (err?.response?.status === 401 && refresh_token) {
         try {
           const refreshed = await getRefreshSession(refresh_token);
+          console.log("refreshed", refreshed);
           return await getUser(refreshed.access_token);
-        } catch {
+        } catch (err) {
+          console.log(err);
           return null;
         }
       }

@@ -67,14 +67,18 @@ const AllMovies = async ({ searchParams }: Props) => {
         <Filter params={params} />
       </section>
       <section>
-        <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
+        <ul className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
           {movies.map((mov, index) => (
-            <MovieCard movie={mov} key={`all-movies-${mov.title}-${index}`} />
+            <li key={`all-movies-${mov.title}-${index}`}>
+              <MovieCard movie={mov} />
+            </li>
           ))}
-        </div>
+        </ul>
         {movies.length === 0 ? (
           <div className="py-20 w-full">
-            <p className="text-white text-center text-3xl font-semibold">No Movie Found</p>
+            <p role="status" className="text-white text-center text-3xl font-semibold">
+              No Movie Found
+            </p>
           </div>
         ) : null}
       </section>

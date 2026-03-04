@@ -40,22 +40,22 @@ const LoginForm = () => {
         <button
           disabled={isPending}
           type="submit"
-          className="px-10 py-3 bg-main-red rounded-md font-bold text-white"
+          className="px-10 py-3 bg-black rounded-md font-bold text-white"
         >
           {isPending ? (
             <div className="text-main-red">
               <LoadingSpinner />
             </div>
           ) : (
-            "Sign Up"
+            "Sign In"
           )}
         </button>
       </div>
       <p className="text-white mt-5">
         No account?{" "}
         <Link href="/auth/register" className="text-main-red">
-          Sign in
-        </Link>
+          Sign In
+        </Link>{" "}
         now
       </p>
     </form>

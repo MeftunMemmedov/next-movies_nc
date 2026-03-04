@@ -5,11 +5,15 @@ import { FaPlay } from "react-icons/fa6";
 
 const Hero = () => {
   return (
-    <section id="home-hero">
+    <section>
       <div className="xl:aspect-1920/1092 md:aspect-1440/836 aspect-390/639 relative">
         <div className=" absolute w-full h-full bg-[linear-gradient(180deg,rgba(20,20,20,1)_2%,rgba(20,20,20,1)_3%,rgba(20,20,20,0.64)_37%,rgba(20,20,20,0.64)_57%,rgba(20,20,20,1)_98%)]"></div>
         <div className="xl:aspect-1920/860 md:aspect-1440/699 aspect-399/500">
-          <Image src={HomeHeroImg} className="w-full h-full object-cover" alt="" />
+          <Image
+            src={HomeHeroImg}
+            className="w-full h-full object-cover"
+            alt="The Best Streaming Experience"
+          />
         </div>
         <div className="absolute bottom-0 w-full z-20">
           <div className="xl:w-1/2 md:w-4/5 w-11/12 text-center m-auto">

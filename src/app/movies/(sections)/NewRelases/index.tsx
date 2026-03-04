@@ -1,8 +1,10 @@
 "use client";
 import MovieCard from "@/components/MovieCard";
-import Slider from "@/components/Slider";
 import { Movie } from "@/types";
+import dynamic from "next/dynamic";
 import { SwiperSlide } from "swiper/react";
+
+const Slider = dynamic(() => import("@/components/Slider"), { ssr: false });
 
 interface Props {
   movies: Movie[];

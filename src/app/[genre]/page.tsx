@@ -57,11 +57,13 @@ const MoviesByGenre = async ({ params }: { params: Promise<{ genre: string }> })
         <h1 className="text-3xl font-semibold">{genre.title}</h1>
       </section>
       <section>
-        <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
+        <ul className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
           {moviesByGenre.map((mov, index) => (
-            <MovieCard movie={mov} key={`all-movies-${mov.title}-${index}`} />
+            <li key={`all-movies-${mov.title}-${index}`}>
+              <MovieCard movie={mov} />
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
     </main>
   );
