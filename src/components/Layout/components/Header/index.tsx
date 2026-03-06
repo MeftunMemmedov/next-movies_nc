@@ -17,6 +17,7 @@ const Header = async () => {
         select: "id,movieId",
       })
     : [];
+  // console.log("HEEEYYYEUSER", user);
 
   return (
     <header className="fixed w-full z-50 bg-[linear-gradient(0deg,rgba(20,20,20,0)_11%,rgba(20,20,20,0.8)_78%)]">

@@ -1,6 +1,6 @@
 import { Movie } from "@/types";
 import Image from "next/image";
-import UserActions from "./components/UserActions";
+import UserActions from "../../../../../components/UserActions";
 
 const Banner = ({ movie }: { movie: Movie }) => {
   return (

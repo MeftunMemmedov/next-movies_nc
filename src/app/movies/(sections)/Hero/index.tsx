@@ -8,17 +8,15 @@ import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperProps, SwiperRef, SwiperSlide } from "swiper/react";
 // import { AiOutlineLike, AiFillSound } from "react-icons/ai";
 import { Movie } from "@/types";
-import { useAppSelector } from "@/store/hooks";
-import { usePathname } from "next/navigation";
-import ToggleWatchlistHeroBtn from "../../../../components/ToggleWatchlistHeroBtn";
+import dynamic from "next/dynamic";
+
+const UserActions = dynamic(() => import("@/components/UserActions"), { ssr: false });
 
 interface Props {
   featuredMovies: Movie[];
 }
 
 const Hero = ({ featuredMovies }: Props) => {
-  const { user, watchlist } = useAppSelector((store) => store.user);
-  const pathname = usePathname();
   const swiperRef = useRef<SwiperRef | null>(null);
 
   const [sliderStatus, setSliderStatus] = useState<"beginning" | "end">("beginning");
@@ -100,22 +98,7 @@ const Hero = ({ featuredMovies }: Props) => {
                       <FaPlay size={18} />
                       <span>Play Now</span>
                     </Link>
-                    {user ? (
-                      <>
-                        <form className="flex items-center gap-5">
-                          <input type="hidden" name="userId" value={user.id} />
-                          <input type="hidden" name="movieId" value={slide.id} />
-                          <input type="hidden" name="pathname" value={pathname} />
-                          <ToggleWatchlistHeroBtn watchlist={watchlist} slide={slide} />
-                          {/* <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg pointer-events-auto">
-                        <AiOutlineLike className="m-auto size-7" />
-                        </button>
-                        <button className="lg:size-14 size-10 bg-black text-white hover:bg-white hover:text-black transition-colors rounded-lg pointer-events-auto">
-                        <AiFillSound className="m-auto size-7" />
-                        </button> */}
-                        </form>
-                      </>
-                    ) : null}
+                    <UserActions movie={slide} />
                   </div>
                 </div>
               </div>

@@ -1,11 +1,16 @@
 import { getDataList } from "@/api/helpers";
-import { getSession } from "@/api/helpers/auth";
 import MovieCard from "@/components/MovieCard";
 import { createFakeImage } from "@/helpers/common";
 import { WatchListMov } from "@/types";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import LogoutForm from "./(components)/LogoutBtn";
+import { getSession } from "@/api/helpers/auth";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Movies | Dashboard",
+};
 
 const Dashboard = async () => {
   const user = await getSession();

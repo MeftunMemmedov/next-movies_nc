@@ -1,5 +1,5 @@
 import axiosAuthInstance from "@/api/auth";
-import { AxiosError } from "axios";
+
 import { cookies } from "next/headers";
 
 export const signUp = async (
@@ -21,19 +21,6 @@ export const signIn = async (email: string, password: string) => {
   return data;
 };
 
-export const getRefreshSession = async (refresh_token: string) => {
-  const { data } = await axiosAuthInstance.post("token?grant_type=refresh_token", {
-    refresh_token,
-  });
-
-  const cookieStore = await cookies();
-
-  cookieStore.set("access", data.access_token, { httpOnly: true, secure: true, path: "/" });
-  cookieStore.set("refresh", data.refresh_token, { httpOnly: true, secure: true, path: "/" });
-
-  return data;
-};
-
 export const getUser = async (access_token: string) => {
   const { data } = await axiosAuthInstance.get("user", {
     headers: {
@@ -47,27 +34,9 @@ export const getSession = async () => {
   const cookieStore = await cookies();
 
   const access_token = cookieStore.get("access")?.value;
-  const refresh_token = cookieStore.get("refresh")?.value;
 
   if (!access_token) return null;
-  try {
-    return await getUser(access_token);
-  } catch (err) {
-    if (err instanceof AxiosError) {
-      console.log(err.response);
-      if (err?.response?.status === 401 && refresh_token) {
-        try {
-          const refreshed = await getRefreshSession(refresh_token);
-          console.log("refreshed", refreshed);
-          return await getUser(refreshed.access_token);
-        } catch (err) {
-          console.log(err);
-          return null;
-        }
-      }
-    }
-    return null;
-  }
+  return await getUser(access_token);
 };
 
 export const logOut = async () => {

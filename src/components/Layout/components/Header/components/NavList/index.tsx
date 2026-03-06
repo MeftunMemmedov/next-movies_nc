@@ -26,6 +26,10 @@ const NavList = ({ user, watchlist }: { user: User; watchlist: WatchListMov[] })
     }
   }, [watchlist]);
 
+  useEffect(() => {
+    console.log(user);
+  }, []);
+
   return (
     <ul className="h-18.75 bg-[#0F0F0F] lg:flex hidden items-center gap-7 px-10 rounded-xl">
       {navLinks.map((link, index) => (

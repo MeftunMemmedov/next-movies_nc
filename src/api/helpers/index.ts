@@ -1,4 +1,3 @@
-import { cache } from "react";
 import axiosInstance from "..";
 
 export const getDataList = async <T>(
@@ -20,7 +19,9 @@ export const getData = async <T>(
 };
 
 export const createNewData = async <T>(table_name: string, data: T) => {
-  await axiosInstance.post(`/${table_name}`, data);
+  await axiosInstance.post(`/${table_name}`, data, {
+    headers: { "Content-Type": "application/json" },
+  });
 };
 
 export const deleteData = async (
@@ -32,8 +33,8 @@ export const deleteData = async (
     .catch((err) => console.log(err.response.data));
 };
 
-export const getCachedDataList = cache(
-  async <T>(table: string, params?: Record<string, string>) => {
-    return await getDataList<T>(table, params);
-  }
-);
+// export const getCachedDataList = cache(
+//   async <T>(table: string, params?: Record<string, string>) => {
+//     return await getDataList<T>(table, params);
+//   }
+// );

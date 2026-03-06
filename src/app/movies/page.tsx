@@ -3,12 +3,10 @@ import { NewRelases, OurGenres } from "./(sections)";
 import { getDataList } from "@/api/helpers";
 import { Movie } from "@/types";
 import { Metadata } from "next";
-import dynamic from "next/dynamic";
-
-const Hero = dynamic(() => import("@/app/movies/(sections)/Hero"));
+import Hero from "./(sections)/Hero";
 
 const title_description = {
-  title: "All Movies",
+  title: "Movies | Top Movies",
   description:
     "The Best Streaming Experience. StreamVibe is the best streaming experience for watching your favorite movies and shows on demand, anytime, anywhere. With StreamVibe, you can enjoy a wide variety of content, including the latest blockbusters, classic movies, popular TV shows, and more. You can also create your own watchlists, so you can easily find the content you want to watch.",
 };
@@ -47,7 +45,7 @@ export const metadata: Metadata = {
 const Movies = async () => {
   const movies = await getDataList<Movie>("mov_movies");
 
-  const featuredMovies = movies.filter((mov) => mov.is_featured === true);
+  const featuredMovies = movies.filter((mov) => mov.is_featured);
   return (
     <main className="container">
       <Hero featuredMovies={featuredMovies} />
