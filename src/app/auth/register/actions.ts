@@ -21,9 +21,9 @@ const initialErrorState = {
 };
 
 export const registerAction = async (_prevState: ActionState, formData: FormData) => {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const username = formData.get("username") as string;
+  const email = (formData.get("email") as string).trim();
+  const password = (formData.get("password") as string).trim();
+  const username = (formData.get("username") as string).trim();
 
   const errors: ActionState["errors"] = { ...initialErrorState };
   if (username.length < 5) errors.username = "Username must be at least 5 chars";

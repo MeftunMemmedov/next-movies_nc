@@ -20,8 +20,8 @@ const initialErrorState = {
 };
 
 export const loginAction = async (_prevState: ActionState, formData: FormData) => {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+  const email = (formData.get("email") as string).trim();
+  const password = (formData.get("password") as string).trim();
 
   const errors: ActionState["errors"] = { ...initialErrorState };
 
