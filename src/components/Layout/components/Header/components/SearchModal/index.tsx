@@ -99,7 +99,13 @@ const SearchModal = () => {
                     <IoIosSearch className="lg:size-8 size-6" />
                   </button>
                   {searchInput !== "" && (
-                    <button onClick={() => setSearchInput("")}>
+                    <button
+                      onClick={() => {
+                        setSearchInput("");
+                        setResults([]);
+                        setStatus("idle");
+                      }}
+                    >
                       <IoIosCloseCircle className="lg:size-8 size-6" />
                     </button>
                   )}
@@ -119,7 +125,7 @@ const SearchModal = () => {
                     {results.map((result, index) => (
                       <li
                         key={`result-${result.title}-${index}-${result.slug}`}
-                        className="custom-scrollbar"
+                        className="custom-scrollbar w-11/12 m-auto"
                       >
                         <Link
                           href={`/movies/${result.slug}`}

@@ -2,8 +2,8 @@ import Link from "next/link";
 import { JSX } from "react";
 import { IoLogoFacebook } from "react-icons/io5";
 import { BsTwitterX } from "react-icons/bs";
-import { FaLinkedin } from "react-icons/fa";
 import Logo from "../Logo";
+import GenreList from "./GenreList";
 
 const Footer = () => {
   const footerNavlist: { title: string; list: { title: string; path: string }[] }[] = [
@@ -24,37 +24,18 @@ const Footer = () => {
         },
       ],
     },
-    {
-      title: "Genres",
-      list: [
-        {
-          title: "Action",
-          path: "/action",
-        },
-        {
-          title: "Adventure",
-          path: "/adventure",
-        },
-        {
-          title: "Comedy",
-          path: "/comedy",
-        },
-      ],
-    },
   ];
 
-  const socials: { title: string; icon: JSX.Element }[] = [
+  const socials: { title: string; icon: JSX.Element; url: string }[] = [
     {
       title: "facebook",
       icon: <IoLogoFacebook size={24} />,
+      url: "https://www.facebook.com/",
     },
     {
       title: "twitter x",
       icon: <BsTwitterX size={20} />,
-    },
-    {
-      title: "linkedin",
-      icon: <FaLinkedin size={24} />,
+      url: "https://x.com/",
     },
   ];
 
@@ -80,15 +61,18 @@ const Footer = () => {
               </ul>
             </nav>
           ))}
+          <GenreList />
           <nav>
             <h3 className="text-lg font-bold mb-5">Connect with us</h3>
             <ul className="flex items-center gap-3.5">
               {socials.map((social, index) => (
-                <li
-                  key={`footer-social-${social.title}-${index}`}
-                  className="size-14 flex items-center justify-center bg-secondary-black hover:bg-white hover:text-secondary-black transition-colors rounded-md"
-                >
-                  {social.icon}
+                <li key={`footer-social-${social.title}-${index}`}>
+                  <Link
+                    className="size-14 flex items-center justify-center bg-secondary-black hover:bg-white hover:text-secondary-black transition-colors rounded-md"
+                    href={social.url}
+                  >
+                    {social.icon}
+                  </Link>
                 </li>
               ))}
             </ul>

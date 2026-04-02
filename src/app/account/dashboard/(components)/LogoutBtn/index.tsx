@@ -2,8 +2,8 @@
 
 import { useFormStatus } from "react-dom";
 import { logoutAction } from "../../actions";
-import { useAppDispatch } from "@/store/hooks";
 import { clearUser } from "@/store/user";
+import { useAppDispatch } from "@/store/hooks";
 
 const LogoutBtn = () => {
   const dispatch = useAppDispatch();
