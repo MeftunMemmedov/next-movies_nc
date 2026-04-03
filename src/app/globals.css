@@ -8,7 +8,7 @@
   --color-main-red: #e50000;
   --color-secondary-black: #1a1a1a;
   --color-main-red: #e50000;
-  --container-custom:        
+  --container-custom:         
 ;
 }
 
@@ -42,11 +42,16 @@ button {
   padding-top: 30px;
   background-color: transparent;
   border: 1px solid black;
-  width: 2px;
+  width: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #e50000;
-  width: 5px;
   border-radius: 10px;
+  height: 50%;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  margin-top: 20px;
+  margin-bottom: 5px;
 }

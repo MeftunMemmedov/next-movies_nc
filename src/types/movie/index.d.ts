@@ -24,3 +24,10 @@ export type Movie = {
   dislikes: string[];
   watchlist: WatchListMov[];
 };
+
+export type MovieFilterType = {
+  genre: string;
+  agerating: string;
+  year: string;
+  imdb: string;
+};

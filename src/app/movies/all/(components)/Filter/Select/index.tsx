@@ -1,38 +1,41 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { MovieFilterType } from "@/types";
+import { useSearchParams } from "next/navigation";
+import { Dispatch, SetStateAction, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
 type Option = { label: string; value: string };
 
 interface Props {
-  queryName: string;
+  queryName: "genre" | "agerating" | "imdb" | "year";
   defaultOptionText: string;
   options: Option[];
+  value: string;
+  setFilterState: Dispatch<SetStateAction<MovieFilterType>>;
 }
 
-const Select = ({ queryName, defaultOptionText, options }: Props) => {
-  const router = useRouter();
+const Select = ({ queryName, defaultOptionText, options, value, setFilterState }: Props) => {
   const searchParams = useSearchParams();
   const [isSelectActive, setIsSelectActive] = useState<boolean>(false);
 
-  const selectedOption = searchParams.get(queryName);
+  const selectedOption: string = value;
   const urlSearchParams = new URLSearchParams(searchParams.toString());
 
   const handleSelect = (val: string) => {
-    urlSearchParams.set(queryName, val);
-    router.push(`?${urlSearchParams.toString()}`);
+    setFilterState((prevFilters) => ({ ...prevFilters, [queryName]: val }));
     setIsSelectActive(false);
   };
 
   return (
-    <div className="text-white inline-block md:min-w-56 min-w-full relative">
+    <div className="text-gray-300 inline-block md:min-w-56 min-w-full relative">
       <button
-        className={`w-full flex items-center md:gap-8 gap-4 justify-between md:pl-10 pl-5 pr-3 py-2 rounded-t-lg bg-red-950 relative z-30 transition-all ${isSelectActive ? "rounded-b-none" : "rounded-b-lg"}`}
+        className={`w-full flex items-center md:gap-8 gap-4 justify-between md:pl-10 pl-5 pr-3 py-2 rounded-t-lg bg-black relative z-30 transition-all ${isSelectActive ? "rounded-b-none" : "rounded-b-lg"}`}
         onClick={() => setIsSelectActive((prevState) => !prevState)}
       >
-        <span className={`${defaultOptionText.length > 17 ? "text-sm" : "text-base"}`}>
-          {selectedOption ?? `--${defaultOptionText}--`}
+        <span
+          className={`${defaultOptionText.length > 17 ? "text-sm" : "text-base"} font-semibold`}
+        >
+          {selectedOption || `${defaultOptionText}`}
         </span>
         <IoIosArrowDown
           className={`${isSelectActive ? "rotate-180" : "rotate-0"} transition-transform`}
@@ -45,8 +48,7 @@ const Select = ({ queryName, defaultOptionText, options }: Props) => {
           <li
             className="hover:bg-main-red px-4 py-2 cursor-pointer"
             onClick={() => {
-              urlSearchParams.delete(queryName);
-              router.push(`?${urlSearchParams.toString()}`);
+              setFilterState((prevFilters) => ({ ...prevFilters, [queryName]: "" }));
               setIsSelectActive(false);
             }}
           >

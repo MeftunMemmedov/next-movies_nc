@@ -7,8 +7,10 @@ import { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { IoIosCloseCircle, IoIosCloseCircleOutline } from "react-icons/io";
 import LoadingSpinner from "@/components/LoadingSpinner";
+// import { usePathname } from "next/navigation";
 
 const SearchModal = () => {
+  // const pathname = usePathname();
   const [isSearchmodalActive, setIsSearchmodalActive] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
   const [debouncedVal, setDebouncedVal] = useState<string>("");
@@ -53,7 +55,17 @@ const SearchModal = () => {
         document.body.classList.remove("overflow-hidden");
       }
     }
+    return () => document.body.classList.remove("overflow-hidden");
   }, [isSearchmodalActive]);
+  // const resetStates = () => {
+  //   setIsSearchmodalActive(false);
+  //   setSearchInput("");
+  //   setResults([]);
+  // };
+  // useEffect(() => {
+  //   resetStates();
+  // }, [pathname]);
+
   return (
     <>
       <button onClick={() => setIsSearchmodalActive(true)}>
@@ -83,11 +95,11 @@ const SearchModal = () => {
                   className="border-b px-5 m-auto w-full h-10 focus:outline-0"
                   placeholder="Search movie"
                   value={searchInput}
+                  autoFocus
                   onChange={(e) => {
                     const value = e.target.value;
                     setSearchInput(value);
                     if (value === "") {
-                      setResults([]);
                       setStatus("idle");
                     } else {
                       setStatus("loading");
@@ -102,8 +114,6 @@ const SearchModal = () => {
                     <button
                       onClick={() => {
                         setSearchInput("");
-                        setResults([]);
-                        setStatus("idle");
                       }}
                     >
                       <IoIosCloseCircle className="lg:size-8 size-6" />
@@ -130,6 +140,12 @@ const SearchModal = () => {
                         <Link
                           href={`/movies/${result.slug}`}
                           className="text-white inline-flex w-full hover:scale-105 transition-transform items-center justify-between p-3 rounded-md bg-main-black mb-3"
+                          onClick={() => {
+                            setIsSearchmodalActive(false);
+                            setSearchInput("");
+                            setResults([]);
+                            setStatus("idle");
+                          }}
                         >
                           <div className="flex items-center gap-4">
                             <Image

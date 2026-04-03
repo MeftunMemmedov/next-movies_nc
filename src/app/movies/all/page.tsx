@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "movies.com/movies/all",
+    canonical: "https://movies.com/movies/all",
   },
 };
 
