@@ -148,26 +148,27 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
                 </data>
               </div>
 
-              <div className="mb-5">
-                <div className="text-gray-400 flex items-center gap-2 mb-3">
-                  <h2>Directors</h2>
-                </div>
-                {currentMovie.director ? (
-                  <div className="flex bg-main-black text-white mb-5 rounded-xl p-3">
-                    <div className="w-1/6 relative aspect-square rounded-md overflow-hidden">
-                      <Image
-                        src={currentMovie.director.image || createFakeImage(100, 100)}
-                        fill
-                        alt={`${currentMovie.title}-directed-by-${currentMovie.director.fullName}`}
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="w-3/4 pl-5 pt-3">
-                      <strong className="font-normal">{currentMovie.director.fullName}</strong>
-                    </div>
+              {currentMovie.director || currentMovie.directors ? (
+                <div className="mb-5">
+                  <div className="text-gray-400 flex items-center gap-2 mb-3">
+                    <h2>Directors</h2>
                   </div>
-                ) : null}
-                {/* {currentMovie.directors.map((director, index) => (
+                  {currentMovie.director ? (
+                    <div className="flex bg-main-black text-white mb-5 rounded-xl p-3">
+                      <div className="w-1/6 relative aspect-square rounded-md overflow-hidden">
+                        <Image
+                          src={currentMovie.director.image || createFakeImage(100, 100)}
+                          fill
+                          alt={`${currentMovie.title}-directed-by-${currentMovie.director.fullName}`}
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="w-3/4 pl-5 pt-3">
+                        <strong className="font-normal">{currentMovie.director.fullName}</strong>
+                      </div>
+                    </div>
+                  ) : null}
+                  {/* {currentMovie.directors.map((director, index) => (
                   <div
                     key={`director-${currentMovie.title}-${director.fullName}-${index}`}
                     className="flex bg-main-black text-white mb-5 rounded-xl p-3"
@@ -180,7 +181,8 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
                     </div>
                   </div>
                 ))} */}
-              </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

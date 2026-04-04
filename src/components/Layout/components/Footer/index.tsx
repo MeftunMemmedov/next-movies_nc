@@ -78,8 +78,7 @@ const Footer = () => {
             </ul>
           </nav>
         </div>
-        <hr className="text-gray-500" />
-        <p className="text-gray-400 pt-6 pb-12.5">@2023 Movies, All Rights Reserved</p>
+        {/* <hr className="text-gray-500" /> */}
       </div>
     </footer>
   );

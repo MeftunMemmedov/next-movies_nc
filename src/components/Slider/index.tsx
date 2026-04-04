@@ -16,7 +16,7 @@ const Slider = ({ children, title, description }: Props) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [paginationCount, setPaginationCount] = useState<number>(0);
   const [isNavVisible, setIsNavVisible] = useState<boolean>(true);
-
+  const [sliderStatus, setIsSliderStatus] = useState<"begin" | "end" | null>("begin");
   const swiperOptions: SwiperProps = {
     modules: [Pagination, Navigation, FreeMode],
     freeMode: true,
@@ -49,6 +49,13 @@ const Slider = ({ children, title, description }: Props) => {
     },
     onSlideChange: (swiper) => {
       setActiveIndex(swiper.activeIndex);
+      if (swiper.isBeginning) {
+        setIsSliderStatus("begin");
+      } else if (swiper.isEnd) {
+        setIsSliderStatus("end");
+      } else {
+        setIsSliderStatus(null);
+      }
     },
   };
 
@@ -77,12 +84,13 @@ const Slider = ({ children, title, description }: Props) => {
           {isNavVisible ? (
             <div className="xl:w-1/5 lg:w-1/2 bg-black lg:flex hidden items-center justify-between p-3 rounded-xl">
               <button
-                className="size-11 bg-main-black text-2xl rounded-md text-white flex items-center justify-center"
+                disabled={sliderStatus === "begin"}
+                className="size-11 bg-main-black text-white disabled:pointer-events-none hover:bg-white hover:text-main-black text-2xl rounded-md  flex items-center justify-center"
                 onClick={() => slideTo("prev")}
               >
                 <MdOutlineArrowBack />
               </button>
-              <div className={`flex gap-1 w-1/2`}>
+              <div className={`flex justify-center gap-1 w-1/2`}>
                 {Array.from({ length: paginationCount }).map((_, index) => (
                   <button
                     onClick={() => slideTo(index)}
@@ -92,7 +100,8 @@ const Slider = ({ children, title, description }: Props) => {
                 ))}
               </div>
               <button
-                className="size-11 bg-main-black text-2xl rounded-md text-white flex items-center justify-center"
+                disabled={sliderStatus === "end"}
+                className="size-11 bg-main-black text-white disabled:pointer-events-none hover:bg-white hover:text-main-black text-2xl rounded-md flex items-center justify-center"
                 onClick={() => slideTo("next")}
               >
                 <MdOutlineArrowForward />

@@ -18,19 +18,20 @@ const OurGenres = () => {
     <Slider title="Our Genres">
       {genres.map((genre, index) => (
         <SwiperSlide key={`home-genre-slide-${index}-${genre.slug}`}>
-          <div className="rounded-md p-6 bg-secondary-black aspect-239/282">
-            <div className="aspect-190/210 rounded-md overflow-hidden">
+          <div className="rounded-md p-6 bg-secondary-black aspect-239/282 group">
+            <div className="aspect-190/210 group-hover:scale-90 transition-transform rounded-md overflow-hidden">
               <Image
                 src={createFakeImage(500, 500)}
                 width={190}
                 height={210}
                 className="size-full object-cover"
                 alt={genre.title}
+                loading="lazy"
               />
             </div>
             <Link
               href={`/${genre.slug}`}
-              className="text-white inline-flex w-full items-center justify-between cursor-pointer hover:text-main-red transition-colors"
+              className="text-white inline-flex w-full items-center justify-between cursor-pointer group-hover:text-main-red font-semibold transition-colors"
             >
               <h3>{genre.title}</h3>
               <MdOutlineArrowForward size={30} />

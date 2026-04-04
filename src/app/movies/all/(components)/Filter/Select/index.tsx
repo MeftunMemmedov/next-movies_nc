@@ -29,7 +29,8 @@ const Select = ({ queryName, defaultOptionText, options, value, setFilterState }
   return (
     <div className="text-gray-300 inline-block md:min-w-56 min-w-full relative">
       <button
-        className={`w-full flex items-center md:gap-8 gap-4 justify-between md:pl-10 pl-5 pr-3 py-2 rounded-t-lg bg-black relative z-30 transition-all ${isSelectActive ? "rounded-b-none" : "rounded-b-lg"}`}
+        aria-expanded={isSelectActive}
+        className="w-full flex items-center md:gap-8 gap-4 justify-between md:pl-10 pl-5 pr-3 py-2 rounded-t-lg bg-black relative z-30 transition-all hover:bg-main-black aria-expanded:rounded-b-none aria-expanded:bg-main-black text-white rounded-b-lg"
         onClick={() => setIsSelectActive((prevState) => !prevState)}
       >
         <span
@@ -57,8 +58,14 @@ const Select = ({ queryName, defaultOptionText, options, value, setFilterState }
         ) : null}
         {options.map((option, index) => (
           <li
+            aria-disabled={
+              selectedOption === option.label ||
+              (queryName === "imdb" &&
+                selectedOption !== "" &&
+                option.label.startsWith(selectedOption))
+            }
             key={`select-${defaultOptionText}-${option.value}-${index}`}
-            className="hover:bg-red-950 px-4 py-2 cursor-pointer"
+            className="hover:bg-red-950 aria-disabled:bg-red-950 aria-disabled:font-semibold px-4 py-2 cursor-pointer"
             onClick={() => handleSelect(option.value)}
           >
             <span>{option.label}</span>

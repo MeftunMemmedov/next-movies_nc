@@ -13,12 +13,13 @@ const Hero = () => {
             src={HomeHeroImg}
             className="w-full h-full object-cover"
             alt="The Best Streaming Experience"
+            loading="eager"
           />
         </div>
         <div className="absolute bottom-0 w-full z-20">
           <div className="xl:w-1/2 md:w-4/5 w-11/12 text-center m-auto">
             <h1 className="text-white lg:text-[58px] text-4xl font-semibold lg:mb-3.5 mb-2">
-              The Best Streaming Experience
+              The Best Movie Streaming Experience
             </h1>
             <p className="text-gray-400 lg:mb-12.5 md:block hidden">
               StreamVibe is the best streaming experience for watching your favorite movies and
@@ -33,7 +34,7 @@ const Hero = () => {
             </p>
             <Link
               href="/movies"
-              className="inline-flex items-center gap-2 rounded-md bg-main-red py-[18.5px] px-6 text-white"
+              className="inline-flex items-center gap-2 rounded-md bg-main-red text-white hover:bg-white hover:text-main-red transition-colors py-[18.5px] px-6 font-semibold"
             >
               <FaPlay size={18} />
               <span>Start Watching Now</span>

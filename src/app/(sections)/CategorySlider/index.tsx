@@ -1,8 +1,6 @@
 "use client";
 
-import { createFakeImage } from "@/helpers/common";
 import { useAppSelector } from "@/store/hooks";
-import Image from "next/image";
 import Link from "next/link";
 import { MdOutlineArrowForward } from "react-icons/md";
 import { SwiperSlide } from "swiper/react";
@@ -21,19 +19,23 @@ const CategorySlider = () => {
     >
       {genres.map((genre, index) => (
         <SwiperSlide key={`home-genre-slide-${index}-${genre.slug}`}>
-          <div className="rounded-md p-6 bg-secondary-black aspect-239/282">
-            <div className="aspect-190/210 rounded-md overflow-hidden">
+          <div className="rounded-xl p-6 bg-secondary-black hover:bg-black aspect-5/1 font-semibold group">
+            {/* <div className="aspect-190/210 rounded-md overflow-hidden">
               <Image
                 src={createFakeImage(500, 500)}
                 width={190}
                 height={210}
                 className="size-full object-cover"
                 alt={genre.title}
+                loading="lazy"
               />
-            </div>
-            <Link href={`/${genre.slug}`} className="text-white flex items-center justify-between">
-              <h2>{genre.title}</h2>
-              <MdOutlineArrowForward size={30} />
+            </div> */}
+            <Link
+              href={`/${genre.slug}`}
+              className="text-white flex items-center justify-between group-hover:text-main-red"
+            >
+              <h2 className="group-hover:scale-110 transition-transform">{genre.title}</h2>
+              <MdOutlineArrowForward size={30} className="group-hover:-mr-2 transition-all" />
             </Link>
           </div>
         </SwiperSlide>

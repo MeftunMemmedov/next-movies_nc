@@ -39,7 +39,8 @@ const Header = async () => {
             )}
           </div>
 
-          <div className="lg:hidden flex items-center justify-center">
+          <div className="lg:hidden flex gap-4 items-center justify-center">
+            <SearchModal />
             <MobileMenu user={user} />
           </div>
         </nav>

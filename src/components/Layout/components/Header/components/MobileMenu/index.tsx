@@ -98,7 +98,7 @@ const MobileMenu = ({ user }: { user: User }) => {
               )}
               <li className="text-end mt-5">
                 <button
-                  className="flex items-center justify-end w-full gap-2"
+                  className="flex items-center justify-around w-full gap-2"
                   onClick={() => {
                     if (isMobilemenuActive) setIsGenremenuActive((prevState) => !prevState);
                   }}
@@ -109,15 +109,18 @@ const MobileMenu = ({ user }: { user: User }) => {
                     className={`mb-2 ${isGenremenuActive ? "rotate-180" : "rotate-0"} transition-transform duration-100`}
                   />
                 </button>
+                <div className="h-px w-full bg-linear-to-l from-transparent via-red-500/70 to-transparent"></div>
                 <ul
-                  className={`flex flex-col gap-2 ${isGenremenuActive ? "max-h-100" : "max-h-0"} transition-all duration-100 overflow-hidden`}
+                  className={`flex flex-col items-center gap-2 ${isGenremenuActive ? "max-h-100" : "max-h-0"} transition-all duration-100 overflow-hidden`}
                 >
                   {genres.map((genre, index) => (
                     <li
                       className="font-semibold"
                       key={`header-mobilemenu-genre-${genre.slug}-${index}`}
                     >
-                      <Link href={`/${genre.slug}`}>{genre.title}</Link>
+                      <Link onClick={() => setIsMobilemenuActive(false)} href={`/${genre.slug}`}>
+                        {genre.title}
+                      </Link>
                     </li>
                   ))}
                 </ul>

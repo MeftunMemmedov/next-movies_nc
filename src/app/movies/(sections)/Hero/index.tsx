@@ -62,7 +62,7 @@ const Hero = ({ featuredMovies }: Props) => {
         <div className="absolute top-0 left-0 z-30 size-full lg:flex hidden flex-col justify-end pointer-events-none lg:px-10 px-1 pb-14">
           <div className="h-14 flex justify-between items-center">
             <button
-              className={`size-11 bg-main-black ${sliderStatus === "beginning" ? "text-gray-500" : "hover:bg-white hover:text-black transition-colors text-white"} transition-colors text-2xl rounded-md  flex items-center justify-center pointer-events-auto`}
+              className={`size-11 bg-main-black text-white disabled:text-gray-500 hover:bg-white hover:text-black transition-colors  text-2xl rounded-md  flex items-center justify-center pointer-events-auto`}
               onClick={() => slideTo("prev")}
               disabled={sliderStatus === "beginning"}
             >
@@ -70,7 +70,7 @@ const Hero = ({ featuredMovies }: Props) => {
             </button>
             {/* <div className="w-1/2"></div> */}
             <button
-              className={`size-11 bg-main-black ${sliderStatus === "end" ? "text-gray-500" : "hover:bg-white hover:text-black transition-colors text-white"} text-2xl rounded-md flex items-center justify-center pointer-events-auto`}
+              className="size-11 bg-main-black disabled:text-gray-500 hover:bg-white hover:text-black transition-colors text-white text-2xl rounded-md flex items-center justify-center pointer-events-auto"
               onClick={() => slideTo("next")}
               disabled={sliderStatus === "end"}
             >
@@ -93,7 +93,7 @@ const Hero = ({ featuredMovies }: Props) => {
                   <div className="flex lg:flex-row flex-col justify-center items-center gap-5 w-full">
                     <Link
                       href={`/movies/${slide.slug}`}
-                      className="inline-flex items-center justify-center gap-2 rounded-md bg-main-red lg:py-[18.5px] py-2 lg:px-20 px-10 lg:w-auto w-11/12 text-white  pointer-events-auto"
+                      className="inline-flex items-center justify-center gap-2 rounded-md bg-main-red text-white hover:bg-white hover:text-main-red hover:scale-110 font-semibold transition-transform lg:py-[18.5px] py-2 lg:px-20 px-10 lg:w-auto w-11/12 pointer-events-auto"
                     >
                       <FaPlay size={18} />
                       <span>Play Now</span>

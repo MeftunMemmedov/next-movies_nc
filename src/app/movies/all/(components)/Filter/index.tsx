@@ -85,14 +85,17 @@ const Filter = ({ params }: { params: Record<string, string | number | undefined
       </div>
       <div className="flex flex-col gap-2 items-center justify-center 2xl:col-span-1 md:col-span-2">
         {Object.values(filterState).some((value) => value !== "") ? (
-          <button className="px-8 py-1 text-white bg-main-red rounded-md" onClick={handleFilter}>
+          <button
+            className="px-8 py-1 text-white bg-main-red hover:bg-white hover:text-main-red transition-colors font-semibold rounded-md"
+            onClick={handleFilter}
+          >
             Filter
           </button>
         ) : null}
         {filters.length > 0 ? (
           <button
             onClick={handleReset}
-            className="px-8 py-1 text-white bg-main-black hover:bg-gray-200 hover:text-black transition-colors rounded-md"
+            className="px-8 py-1 text-white bg-main-black hover:bg-gray-200 hover:text-black font-semibold transition-colors rounded-md"
           >
             Reset
           </button>
