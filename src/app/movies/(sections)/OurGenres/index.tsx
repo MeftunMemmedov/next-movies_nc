@@ -18,7 +18,7 @@ const OurGenres = () => {
     <Slider title="Our Genres">
       {genres.map((genre, index) => (
         <SwiperSlide key={`home-genre-slide-${index}-${genre.slug}`}>
-          <div className="rounded-md p-6 bg-secondary-black aspect-239/282 group">
+          <div className="rounded-md p-6 bg-secondary-black aspect-239/282 group cursor-pointer">
             <div className="aspect-190/210 group-hover:scale-90 transition-transform rounded-md overflow-hidden">
               <Image
                 src={createFakeImage(500, 500)}

@@ -1,6 +1,6 @@
 import { HomeHeroImg } from "@/assets/images";
+import LinkButton from "@/components/LinkButton";
 import Image from "next/image";
-import Link from "next/link";
 import { FaPlay } from "react-icons/fa6";
 
 const Hero = () => {
@@ -32,13 +32,7 @@ const Hero = () => {
               StreamVibe is the best streaming experience for watching your favorite movies and
               shows on demand, anytime, anywhere.
             </p>
-            <Link
-              href="/movies"
-              className="inline-flex items-center gap-2 rounded-md bg-main-red text-white hover:bg-white hover:text-main-red transition-colors py-[18.5px] px-6 font-semibold"
-            >
-              <FaPlay size={18} />
-              <span>Start Watching Now</span>
-            </Link>
+            <LinkButton path="/movies" icon={<FaPlay size={18} />} title="Start Watching Now" />
           </div>
         </div>
       </div>

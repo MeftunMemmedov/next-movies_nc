@@ -4,6 +4,7 @@ import Select from "./Select";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { MovieFilterType } from "@/types";
+import { IoIosSearch } from "react-icons/io";
 
 const Filter = ({ params }: { params: Record<string, string | number | undefined> }) => {
   const { genres } = useAppSelector((store) => store.data);
@@ -17,6 +18,7 @@ const Filter = ({ params }: { params: Record<string, string | number | undefined
     agerating: searchParams.get("agerating") || "",
     year: searchParams.get("year") || "",
     imdb: searchParams.get("imdb") || "",
+    q: searchParams.get("q") || "",
   };
 
   const [filterState, setFilterState] = useState<MovieFilterType>(initialFilterState);
@@ -34,7 +36,7 @@ const Filter = ({ params }: { params: Record<string, string | number | undefined
   };
 
   const handleReset = () => {
-    setFilterState({ genre: "", imdb: "", agerating: "", year: "" });
+    setFilterState({ genre: "", imdb: "", agerating: "", year: "", q: "" });
     router.replace("/movies/all");
   };
 
@@ -83,7 +85,23 @@ const Filter = ({ params }: { params: Record<string, string | number | undefined
           setFilterState={setFilterState}
         />
       </div>
-      <div className="flex flex-col gap-2 items-center justify-center 2xl:col-span-1 md:col-span-2">
+      <div className="flex items-center justify-center 2xl:col-span-1 md:col-span-2">
+        <div className="h-6 w-full relative">
+          <input
+            type="text"
+            className="w-full text-white h-full bg-black focus:outline-0 px-4"
+            value={filterState.q}
+            placeholder="Search by title..."
+            onChange={(e) =>
+              setFilterState((prevFilters) => ({ ...prevFilters, q: e.target.value.trim() }))
+            }
+          />
+          <div className="absolute top-0 right-2 h-full border inline-flex justify-center items-center">
+            <IoIosSearch className="lg:size-4 size-2 text-white" />
+          </div>
+        </div>
+      </div>
+      <div className="col-span-5 flex items-center justify-center gap-5 pt-5">
         {Object.values(filterState).some((value) => value !== "") ? (
           <button
             className="px-8 py-1 text-white bg-main-red hover:bg-white hover:text-main-red transition-colors font-semibold rounded-md"

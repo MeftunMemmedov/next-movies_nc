@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { NewRelases, OurGenres } from "./(sections)";
 import { getDataList } from "@/api/helpers";
 import { Movie } from "@/types";
@@ -6,6 +5,7 @@ import { Metadata } from "next";
 import { MdMovieFilter } from "react-icons/md";
 
 import Hero from "./(sections)/Hero";
+import LinkButton from "@/components/LinkButton";
 
 const title_description = {
   title: "Movies | Top Movies",
@@ -54,13 +54,7 @@ const Movies = async () => {
       <OurGenres />
       <NewRelases movies={movies} />
       <div className="pt-15 flex justify-center">
-        <Link
-          href="/movies/all"
-          className="py-3 px-10 inline-flex items-center gap-2 bg-main-red text-white hover:bg-white hover:text-main-red transition-transform hover:scale-110 font-semibold rounded-md"
-        >
-          <MdMovieFilter size={20} />
-          All movies
-        </Link>
+        <LinkButton path="/movies/all" icon={<MdMovieFilter size={20} />} title="All Movies" />
       </div>
     </main>
   );

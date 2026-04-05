@@ -15,11 +15,11 @@ const CategorySlider = () => {
   return (
     <Slider
       title="Explore our wide variety of categories"
-      description=" Whether you're looking for a comedy to make you laugh, a drama to make you think, or a documentary to learn something new"
+      description="Whether you're looking for a comedy to make you laugh, a drama to make you think, or a documentary to learn something new"
     >
       {genres.map((genre, index) => (
         <SwiperSlide key={`home-genre-slide-${index}-${genre.slug}`}>
-          <div className="rounded-xl p-6 bg-secondary-black hover:bg-black aspect-5/1 font-semibold group">
+          <div className="cursor-pointer rounded-xl p-6 bg-secondary-black hover:bg-black aspect-5/1 font-semibold group">
             {/* <div className="aspect-190/210 rounded-md overflow-hidden">
               <Image
                 src={createFakeImage(500, 500)}

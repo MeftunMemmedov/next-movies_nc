@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import { useRef, useState } from "react";
 import { FaPlay } from "react-icons/fa6";
 import { MdOutlineArrowBack, MdOutlineArrowForward } from "react-icons/md";
@@ -9,6 +8,7 @@ import { Swiper, SwiperProps, SwiperRef, SwiperSlide } from "swiper/react";
 // import { AiOutlineLike, AiFillSound } from "react-icons/ai";
 import { Movie } from "@/types";
 import dynamic from "next/dynamic";
+import LinkButton from "@/components/LinkButton";
 
 const UserActions = dynamic(() => import("@/components/UserActions"), { ssr: false });
 
@@ -19,12 +19,17 @@ interface Props {
 const Hero = ({ featuredMovies }: Props) => {
   const swiperRef = useRef<SwiperRef | null>(null);
 
-  const [sliderStatus, setSliderStatus] = useState<"beginning" | "end">("beginning");
+  const [sliderStatus, setSliderStatus] = useState<"beginning" | "end" | null>("beginning");
   const swiperOptions: SwiperProps = {
     modules: [Navigation, Pagination],
-    onSlideChange(swiper) {
-      if (swiper.isBeginning) setSliderStatus("beginning");
-      if (swiper.isEnd) setSliderStatus("end");
+    onSlideChange: (swiper) => {
+      if (swiper.isBeginning) {
+        setSliderStatus("beginning");
+      } else if (swiper.isEnd) {
+        setSliderStatus("end");
+      } else {
+        setSliderStatus(null);
+      }
     },
     breakpoints: {
       768: {
@@ -62,7 +67,7 @@ const Hero = ({ featuredMovies }: Props) => {
         <div className="absolute top-0 left-0 z-30 size-full lg:flex hidden flex-col justify-end pointer-events-none lg:px-10 px-1 pb-14">
           <div className="h-14 flex justify-between items-center">
             <button
-              className={`size-11 bg-main-black text-white disabled:text-gray-500 hover:bg-white hover:text-black transition-colors  text-2xl rounded-md  flex items-center justify-center pointer-events-auto`}
+              className="size-11 bg-main-black text-white disabled:text-gray-500 enabled:hover:bg-white enabled:hover:text-black transition-colors text-2xl rounded-md  flex items-center justify-center pointer-events-auto"
               onClick={() => slideTo("prev")}
               disabled={sliderStatus === "beginning"}
             >
@@ -70,8 +75,10 @@ const Hero = ({ featuredMovies }: Props) => {
             </button>
             {/* <div className="w-1/2"></div> */}
             <button
-              className="size-11 bg-main-black disabled:text-gray-500 hover:bg-white hover:text-black transition-colors text-white text-2xl rounded-md flex items-center justify-center pointer-events-auto"
-              onClick={() => slideTo("next")}
+              className="size-11 bg-main-black text-white disabled:text-gray-500 enabled:hover:bg-white enabled:hover:text-black transition-colors text-2xl rounded-md  flex items-center justify-center pointer-events-auto"
+              onClick={() => {
+                slideTo("next");
+              }}
               disabled={sliderStatus === "end"}
             >
               <MdOutlineArrowForward />
@@ -91,13 +98,12 @@ const Hero = ({ featuredMovies }: Props) => {
                   </p>
 
                   <div className="flex lg:flex-row flex-col justify-center items-center gap-5 w-full">
-                    <Link
-                      href={`/movies/${slide.slug}`}
-                      className="inline-flex items-center justify-center gap-2 rounded-md bg-main-red text-white hover:bg-white hover:text-main-red hover:scale-110 font-semibold transition-transform lg:py-[18.5px] py-2 lg:px-20 px-10 lg:w-auto w-11/12 pointer-events-auto"
-                    >
-                      <FaPlay size={18} />
-                      <span>Play Now</span>
-                    </Link>
+                    <LinkButton
+                      path={`/movies/${slide.slug}`}
+                      icon={<FaPlay size={18} />}
+                      title="Play Now"
+                      extraClassName="pointer-events-auto"
+                    />
                     <UserActions movie={slide} />
                   </div>
                 </div>
@@ -107,7 +113,7 @@ const Hero = ({ featuredMovies }: Props) => {
                 width={500}
                 height={300}
                 className="size-full object-cover"
-                alt={slide.title}
+                alt={`${slide.title} - ${slide.description}`}
               />
             </SwiperSlide>
           ))}

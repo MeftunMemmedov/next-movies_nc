@@ -19,6 +19,14 @@ const SearchModal = () => {
   );
   const [results, setResults] = useState<Movie[]>([]);
 
+  const searchInputValue = searchInput.trim();
+  const debouncedValue = debouncedVal.trim();
+
+  const resetInput = () => {
+    setResults([]);
+    setStatus("idle");
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const timeOut = setTimeout(() => {
@@ -30,12 +38,12 @@ const SearchModal = () => {
   }, [searchInput]);
 
   useEffect(() => {
-    if (debouncedVal === "") return;
+    if (debouncedValue === "") return;
     const getResults = async () => {
       try {
         setStatus("loading");
         const res = await getDataList<Movie>("mov_movies", {
-          title: `ilike.%${debouncedVal.trim()}%`,
+          title: `ilike.%${debouncedValue}%`,
           limit: 5,
         });
         setResults(res);
@@ -57,6 +65,7 @@ const SearchModal = () => {
     }
     return () => document.body.classList.remove("overflow-hidden");
   }, [isSearchmodalActive]);
+
   // const resetStates = () => {
   //   setIsSearchmodalActive(false);
   //   setSearchInput("");
@@ -99,21 +108,22 @@ const SearchModal = () => {
                   onChange={(e) => {
                     const value = e.target.value;
                     setSearchInput(value);
-                    if (value === "") {
-                      setStatus("idle");
+                    if (value.trim() === "") {
+                      resetInput();
                     } else {
                       setStatus("loading");
                     }
                   }}
                 />
                 <div className="flex items-center gap-2 absolute right-0 bottom-1 pr-5">
-                  <button>
+                  <button disabled={searchInputValue === ""}>
                     <IoIosSearch className="lg:size-8 size-6" />
                   </button>
-                  {searchInput !== "" && (
+                  {searchInputValue !== "" && (
                     <button
                       onClick={() => {
                         setSearchInput("");
+                        resetInput();
                       }}
                     >
                       <IoIosCloseCircle className="lg:size-8 size-6" />

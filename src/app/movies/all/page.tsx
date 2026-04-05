@@ -47,17 +47,19 @@ interface Props {
     agerating?: string;
     year?: string;
     imdb?: string;
+    q: string;
   }>;
 }
 
 const AllMovies = async ({ searchParams }: Props) => {
-  const { genre, agerating, year, imdb } = await searchParams;
+  const { genre, agerating, year, imdb, q } = await searchParams;
   const params: Record<string, string | number | undefined> = {};
 
   if (genre) params.genres = `cs.{${genre}}`;
   if (year) params.year = `eq.${year}`;
   if (agerating) params.age_rating = `eq.${agerating}`;
   if (imdb) params.rating = `gte.${imdb}`;
+  if (q) params.title = `ilike.%${q}%`;
 
   const movies = await getDataList<Movie>("mov_movies", params);
 

@@ -30,4 +30,5 @@ export type MovieFilterType = {
   agerating: string;
   year: string;
   imdb: string;
+  q: string;
 };
