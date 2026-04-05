@@ -7,10 +7,10 @@ import { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { IoIosCloseCircle, IoIosCloseCircleOutline } from "react-icons/io";
 import LoadingSpinner from "@/components/LoadingSpinner";
-// import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const SearchModal = () => {
-  // const pathname = usePathname();
+  const pathname = usePathname();
   const [isSearchmodalActive, setIsSearchmodalActive] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
   const [debouncedVal, setDebouncedVal] = useState<string>("");
@@ -66,15 +66,7 @@ const SearchModal = () => {
     return () => document.body.classList.remove("overflow-hidden");
   }, [isSearchmodalActive]);
 
-  // const resetStates = () => {
-  //   setIsSearchmodalActive(false);
-  //   setSearchInput("");
-  //   setResults([]);
-  // };
-  // useEffect(() => {
-  //   resetStates();
-  // }, [pathname]);
-
+  if (pathname === "/movies/all") return null;
   return (
     <>
       <button onClick={() => setIsSearchmodalActive(true)}>
@@ -133,6 +125,15 @@ const SearchModal = () => {
               </div>
             </form>
             <div className=" h-50 pt-4 px-10">
+              {searchInputValue.length > 0 && (
+                <Link
+                  href={`/movies/all?q=${searchInputValue}`}
+                  className="text-center block text-gray-400"
+                >
+                  All results for{" "}
+                  <span className="font-semibold text-white">{searchInputValue}</span>
+                </Link>
+              )}
               {status === "loading" ? (
                 <div className="flex justify-center items-center py-20">
                   <div className="text-main-red text-4xl">

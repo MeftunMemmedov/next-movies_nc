@@ -34,7 +34,7 @@ const Select = ({ queryName, defaultOptionText, options, value, setFilterState }
         onClick={() => setIsSelectActive((prevState) => !prevState)}
       >
         <span
-          className={`${defaultOptionText.length > 17 ? "text-sm" : "text-base"} font-semibold`}
+          className={`${defaultOptionText.length > 17 ? "text-sm" : "text-base"} font-semibold text-nowrap`}
         >
           {selectedOption || `${defaultOptionText}`}
         </span>
