@@ -28,13 +28,11 @@ const SearchModal = () => {
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const timeOut = setTimeout(() => {
-        setDebouncedVal(searchInput);
-      }, 500);
+    const timeOut = setTimeout(() => {
+      setDebouncedVal(searchInput);
+    }, 500);
 
-      return () => clearTimeout(timeOut);
-    }
+    return () => clearTimeout(timeOut);
   }, [searchInput]);
 
   useEffect(() => {
@@ -56,12 +54,10 @@ const SearchModal = () => {
   }, [debouncedVal]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (isSearchmodalActive) {
-        document.body.classList.add("overflow-hidden");
-      } else {
-        document.body.classList.remove("overflow-hidden");
-      }
+    if (isSearchmodalActive) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
     }
     return () => document.body.classList.remove("overflow-hidden");
   }, [isSearchmodalActive]);
@@ -128,7 +124,10 @@ const SearchModal = () => {
               {searchInputValue.length > 0 && (
                 <Link
                   href={`/movies/all?q=${searchInputValue}`}
-                  className="text-center block text-gray-400"
+                  className="text-center block text-gray-400 mb-5"
+                  onClick={() => {
+                    setIsSearchmodalActive(false);
+                  }}
                 >
                   All results for{" "}
                   <span className="font-semibold text-white">{searchInputValue}</span>

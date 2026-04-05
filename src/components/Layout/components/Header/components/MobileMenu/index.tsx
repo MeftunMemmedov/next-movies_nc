@@ -25,13 +25,12 @@ const MobileMenu = ({ user }: { user: User }) => {
     { title: "Support", path: "/support" },
   ];
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (isMobilemenuActive) {
-        document.body.classList.add("overflow-hidden");
-      } else {
-        document.body.classList.remove("overflow-hidden");
-      }
+    if (isMobilemenuActive) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
     }
+    return () => document.body.classList.remove("overflow-hidden");
   }, [isMobilemenuActive]);
 
   useEffect(() => {
