@@ -7,14 +7,15 @@ import { SwiperSlide } from "swiper/react";
 const Slider = dynamic(() => import("@/components/Slider"), { ssr: false });
 
 interface Props {
+  title: string;
   movies: Movie[];
 }
 
-const NewRelases = ({ movies }: Props) => {
+const MovieSlider = ({ title, movies }: Props) => {
   return (
-    <Slider title="New Relases">
+    <Slider title={title}>
       {movies.map((movie, index) => (
-        <SwiperSlide key={`home-genre-slide-${index}-${movie.id}`}>
+        <SwiperSlide key={`${title}-mov-slide-${index}-${movie.id}`}>
           <MovieCard movie={movie} />
         </SwiperSlide>
       ))}
@@ -22,4 +23,4 @@ const NewRelases = ({ movies }: Props) => {
   );
 };
 
-export default NewRelases;
+export default MovieSlider;

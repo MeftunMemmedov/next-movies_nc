@@ -1,4 +1,4 @@
-import { NewRelases, OurGenres } from "./(sections)";
+import { OurGenres } from "./(sections)";
 import { getDataList } from "@/api/helpers";
 import { Movie } from "@/types";
 import { Metadata } from "next";
@@ -6,6 +6,7 @@ import { MdMovieFilter } from "react-icons/md";
 
 import Hero from "./(sections)/Hero";
 import LinkButton from "@/components/LinkButton";
+import MovieSlider from "@/components/MovieSlider";
 
 const title_description = {
   title: "Movies | Top Movies",
@@ -52,7 +53,7 @@ const Movies = async () => {
     <main className="container">
       <Hero featuredMovies={featuredMovies} />
       <OurGenres />
-      <NewRelases movies={movies} />
+      <MovieSlider title="New Releases" movies={movies} />
       <div className="pt-15 flex justify-center">
         <LinkButton path="/movies/all" icon={<MdMovieFilter size={20} />} title="All Movies" />
       </div>

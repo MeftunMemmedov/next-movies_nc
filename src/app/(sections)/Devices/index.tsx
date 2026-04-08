@@ -63,13 +63,13 @@ const Devices = () => {
           {devices.map((device, index) => (
             <div
               key={`home-device-${index}`}
-              className="border border-gray-800 rounded-xl aspect-413/230 p-10 bg-black bg-[linear-gradient(31deg,rgba(20,20,20,0)_59%,rgba(255,0,0,0.28)_100%)]"
+              className=" rounded-xl aspect-413/230 p-10 bg-black bg-[linear-gradient(31deg,rgba(20,20,20,0)_59%,rgba(255,0,0,0.28)_100%)]"
             >
               <div className="flex items-center gap-4 mb-5">
                 <div className="bg-secondary-black text-main-red size-12.5 rounded-md text-3xl flex items-center justify-center">
                   {device.icon}
                 </div>
-                <h3 className="text-white text-xl">{device.title}</h3>
+                <h3 className="text-white md:text-xl text-lg font-semibold">{device.title}</h3>
               </div>
               <p className="text-gray-400">{device.description}</p>
             </div>

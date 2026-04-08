@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { IoIosCloseCircle, IoIosCloseCircleOutline } from "react-icons/io";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const SearchModal = () => {
   const pathname = usePathname();
+  const router = useRouter();
+
   const [isSearchmodalActive, setIsSearchmodalActive] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
   const [debouncedVal, setDebouncedVal] = useState<string>("");
@@ -62,6 +64,20 @@ const SearchModal = () => {
     return () => document.body.classList.remove("overflow-hidden");
   }, [isSearchmodalActive]);
 
+  useEffect(() => {
+    const close = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsSearchmodalActive(false);
+      }
+    };
+
+    window.addEventListener("keydown", close);
+
+    return () => {
+      window.removeEventListener("keydown", close);
+    };
+  }, []);
+
   if (pathname === "/movies/all") return null;
   return (
     <>
@@ -78,11 +94,19 @@ const SearchModal = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <form
-              // onSubmit={(e) => e.preventDefault()}
+              onSubmit={(e) => {
+                e.preventDefault();
+                router.push(`/movies/all?q=${searchInputValue}`);
+                resetInput();
+              }}
               className=" flex flex-col"
             >
               <div className="pb-10 pt-5 px-5">
-                <button onClick={() => setIsSearchmodalActive(false)} className="float-right">
+                <button
+                  type="button"
+                  onClick={() => setIsSearchmodalActive(false)}
+                  className="float-right"
+                >
                   <IoIosCloseCircleOutline className="lg:size-8 size-6" />
                 </button>
               </div>
@@ -104,11 +128,12 @@ const SearchModal = () => {
                   }}
                 />
                 <div className="flex items-center gap-2 absolute right-0 bottom-1 pr-5">
-                  <button disabled={searchInputValue === ""}>
+                  <button type="submit" disabled={searchInputValue === ""}>
                     <IoIosSearch className="lg:size-8 size-6" />
                   </button>
                   {searchInputValue !== "" && (
                     <button
+                      type="button"
                       onClick={() => {
                         setSearchInput("");
                         resetInput();

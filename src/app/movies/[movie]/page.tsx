@@ -12,6 +12,7 @@ import { getDataList } from "@/api/helpers";
 import { Movie } from "@/types";
 import { cache } from "react";
 import TrailerPlayer from "./(components)/TrailerPlayer";
+import MovieSlider from "@/components/MovieSlider";
 
 export const revalidate = 3600;
 
@@ -80,7 +81,7 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
   if (!movieData) {
     notFound();
   }
-  const { movie: currentMovie, cast } = movieData;
+  const { movie: currentMovie, cast, relatedMovies } = movieData;
 
   return (
     <main className="container">
@@ -114,7 +115,7 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
                   <TbCategory />
                   <h3>Genres</h3>
                 </div>
-                <ul>
+                <ul className="flex flex-wrap">
                   {currentMovie.genres.map((genre, index) => (
                     <li
                       key={`genre-of-${currentMovie.title}-${genre}-${index}`}
@@ -131,9 +132,9 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
                   <TbCategory />
                   <h3>Age rating</h3>
                 </div>
-                <strong className="text-white font-normal px-3 py-2 text-sm bg-main-black mr-3 mb-3 rounded-md">
+                <span className="text-white font-normal px-3 py-2 text-sm bg-main-black mr-3 mb-3 rounded-md">
                   {currentMovie.age_rating}
-                </strong>
+                </span>
               </div>
               <div className="mb-5">
                 <div className="text-gray-400 flex items-center gap-2 mb-3">
@@ -154,7 +155,7 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
                     <h2>Directors</h2>
                   </div>
                   {currentMovie.director ? (
-                    <div className="flex bg-main-black text-white mb-5 rounded-xl p-3">
+                    <div className="flex items-center md:gap-4 gap-2 bg-main-black text-white mb-5 rounded-xl p-3">
                       <div className="w-1/6 relative aspect-square rounded-md overflow-hidden">
                         <Image
                           src={currentMovie.director.image || createFakeImage(100, 100)}
@@ -163,8 +164,10 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
                           className="object-cover"
                         />
                       </div>
-                      <div className="w-3/4 pl-5 pt-3">
-                        <strong className="font-normal">{currentMovie.director.fullName}</strong>
+                      <div className="w-3/4 flex items-center">
+                        <strong className="font-normal md:text-base text-sm">
+                          {currentMovie.director.fullName}
+                        </strong>
                       </div>
                     </div>
                   ) : null}
@@ -185,6 +188,9 @@ const MovieDetails = async ({ params }: { params: Promise<{ movie: string }> }) 
               ) : null}
             </div>
           </div>
+        </div>
+        <div>
+          <MovieSlider title="Related Movies" movies={relatedMovies} />
         </div>
       </article>
     </main>

@@ -72,38 +72,80 @@ const FAQ = () => {
             </button>
           </div>
         </div>
-        <ul className="lg:columns-2">
-          {FAQ.map((faq, index) => (
-            <li key={`home-faq-${faq.id}-${index}`} className="flex flex-col gap-5 py-3">
-              <div className="flex gap-4">
-                <div>
-                  <div className="bg-secondary-black text-white size-12.5 rounded-md text-xl flex items-center justify-center">
-                    {`0${index + 1}`}
+        <div className="flex md:flex-row flex-col justify-between">
+          <ul>
+            {FAQ.slice(0, 4).map((faq) => (
+              <li key={`home-faq-${faq.id}-${faq.id}`} className="flex flex-col gap-5 py-3 group">
+                <div className="flex gap-4">
+                  <div>
+                    <div
+                      className={`${activeFaq === faq.id ? "bg-white text-black" : "bg-secondary-black text-white"} size-12.5 rounded-md text-xl flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors`}
+                    >
+                      {`0${faq.id}`}
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() =>
+                        activeFaq === faq.id ? setActiveFaq(0) : setActiveFaq(faq.id)
+                      }
+                      className="w-full text-start flex items-center justify-between gap-2 lg:pr-14"
+                    >
+                      <h3 className="md:text-xl sm:text-lg text-white pb-4 pt-3">{faq.question}</h3>
+                      {activeFaq === faq.id ? (
+                        <FaMinus color="white" className="lg:size-6 size-4" />
+                      ) : (
+                        <FaPlus color="white" className="lg:size-6 size-4" />
+                      )}
+                    </button>
+                    <div
+                      className={`${faq.id === activeFaq ? "max-h-30 pb-10" : "max-h-0"} transition-all overflow-hidden`}
+                    >
+                      <p className="text-gray-500 md:text-lg text-sm">{faq.answer}</p>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <button
-                    onClick={() => (activeFaq === faq.id ? setActiveFaq(0) : setActiveFaq(faq.id))}
-                    className="w-full text-start flex items-center justify-between gap-2 lg:pr-14"
-                  >
-                    <h3 className="md:text-xl text-lg text-white pb-4 pt-3">{faq.question}</h3>
-                    {activeFaq === faq.id ? (
-                      <FaMinus color="white" className="lg:size-6 size-4" />
-                    ) : (
-                      <FaPlus color="white" className="lg:size-6 size-4" />
-                    )}
-                  </button>
-                  <div
-                    className={`${faq.id === activeFaq ? "max-h-18 pb-10" : "max-h-0"} transition-all overflow-hidden`}
-                  >
-                    <p className="text-gray-500 md:text-lg text-sm">{faq.answer}</p>
+                <div className="h-px w-full bg-linear-to-r from-transparent via-red-500/70 to-transparent"></div>
+              </li>
+            ))}
+          </ul>
+          <ul>
+            {FAQ.slice(4, 9).map((faq) => (
+              <li key={`home-faq-${faq.id}-${faq.id}`} className="flex flex-col gap-5 py-3 group">
+                <div className="flex gap-4">
+                  <div>
+                    <div
+                      className={`${activeFaq === faq.id ? "bg-white text-black" : "bg-secondary-black text-white"} size-12.5 rounded-md text-xl flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors`}
+                    >
+                      {`0${faq.id}`}
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() =>
+                        activeFaq === faq.id ? setActiveFaq(0) : setActiveFaq(faq.id)
+                      }
+                      className="w-full text-start flex items-center justify-between gap-2 lg:pr-14"
+                    >
+                      <h3 className="md:text-xl sm:text-lg text-white pb-4 pt-3">{faq.question}</h3>
+                      {activeFaq === faq.id ? (
+                        <FaMinus color="white" className="lg:size-6 size-4" />
+                      ) : (
+                        <FaPlus color="white" className="lg:size-6 size-4" />
+                      )}
+                    </button>
+                    <div
+                      className={`${faq.id === activeFaq ? "max-h-30 pb-10" : "max-h-0"} transition-all overflow-hidden`}
+                    >
+                      <p className="text-gray-500 md:text-lg text-sm">{faq.answer}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="h-px w-full bg-linear-to-r from-transparent via-red-500/70 to-transparent"></div>
-            </li>
-          ))}
-        </ul>
+                <div className="h-px w-full bg-linear-to-r from-transparent via-red-500/70 to-transparent"></div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );
